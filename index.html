@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eneagrama · Guia Contemplativo</title>
+    <style>
+        /* --- RESET E BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #f7f2eb;
+            color: #3e3a36;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fffcf8;
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #5a4c3e;
+            border-bottom: 1px solid #e3d9cf;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.8rem;
+            text-align: center;
+        }
+
+        /* --- NAVEGAÇÃO POR ABAS --- */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: #ede7e0;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            font-family: inherit;
+            font-size: 1rem;
+            border-radius: 40px;
+            color: #5a4c3e;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        }
+
+        .tab-btn:hover {
+            background: #ddd4ca;
+        }
+
+        .tab-btn.active {
+            background: #b8a99a;
+            color: #fffcf8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fade {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* --- COMPONENTES --- */
+        .pergunta {
+            background: #f8f3ed;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.2rem;
+            border-left: 6px solid #b8a99a;
+        }
+
+        .pergunta p {
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .likert {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .likert label {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-size: 0.95rem;
+            background: #fffcf8;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid #d6cbbc;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .likert label:hover {
+            background: #ede7e0;
+        }
+
+        .likert input[type="radio"] {
+            accent-color: #8f7a66;
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .btn {
+            background: #b8a99a;
+            border: none;
+            color: #fffcf8;
+            font-family: inherit;
+            font-size: 1.1rem;
+            padding: 0.7rem 2.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #a08d7c;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #ede7e0;
+            color: #5a4c3e;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd4ca;
+        }
+
+        .card-tipo {
+            background: #f8f3ed;
+            border-radius: 20px;
+            padding: 1.8rem 2rem;
+            margin-top: 1rem;
+            border-left: 8px solid #b8a99a;
+        }
+
+        .card-tipo h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-tipo .subtitulo {
+            font-size: 1.1rem;
+            color: #6f5f4e;
+            margin-bottom: 1rem;
+        }
+
+        .badge-tipo {
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            background: #e3d9cf;
+            color: #3e3a36;
+            font-size: 0.9rem;
+            margin-right: 0.4rem;
+        }
+
+        .detalhe {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            margin: 1rem 0;
+        }
+
+        .detalhe-item {
+            background: #fffcf8;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            border: 1px solid #d6cbbc;
+            font-size: 0.95rem;
+        }
+
+        .lista-tipos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .item-catalogo {
+            background: #f8f3ed;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            border-left: 5px solid #b8a99a;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .item-catalogo:hover {
+            background: #ede7e0;
+            transform: translateY(-2px);
+        }
+
+        .item-catalogo .nome-tipo {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .item-catalogo .virt-vicio {
+            font-size: 0.9rem;
+            color: #6f5f4e;
+        }
+
+        .footer-nota {
+            margin-top: 2.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e3d9cf;
+            font-size: 0.9rem;
+            color: #8f7a66;
+            text-align: center;
+        }
+
+        /* responsivo */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.2rem;
+            }
+            .likert label {
+                font-size: 0.85rem;
+                padding: 0.1rem 0.6rem;
+            }
+            .detalhe {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🌿 Eneagrama · Caminho Interior</h1>
+
+    <!-- Abas -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="teste">📋 Teste</button>
+        <button class="tab-btn" data-tab="resultado">🧭 Meu Tipo</button>
+        <button class="tab-btn" data-tab="catalogo">📚 Catálogo</button>
+    </div>
+
+    <!-- CONTEÚDO DAS ABAS -->
+
+    <!-- Aba: Teste -->
+    <div id="tab-teste" class="tab-content active">
+        <p style="margin-bottom: 1.5rem; color: #6f5f4e;">
+            Responda cada frase com o quanto você se identifica (1 = discordo totalmente, 5 = concordo totalmente).
+        </p>
+        <form id="form-teste">
+            <div id="perguntas-container"></div>
+            <button type="submit" class="btn">Ver meu resultado</button>
+        </form>
+        <div id="resultado-teste" style="margin-top: 1.5rem;"></div>
+    </div>
+
+    <!-- Aba: Meu Tipo (resultado salvo) -->
+    <div id="tab-resultado" class="tab-content">
+        <div id="meu-tipo-container">
+            <p style="color: #6f5f4e;">Faça o teste para descobrir seu tipo principal.</p>
+        </div>
+        <button id="btn-ver-todos" class="btn btn-secondary" style="margin-top: 1rem;">Ver todos os tipos</button>
+    </div>
+
+    <!-- Aba: Catálogo -->
+    <div id="tab-catalogo" class="tab-content">
+        <div id="catalogo-container" class="lista-tipos"></div>
+        <div id="detalhe-catalogo" style="margin-top: 1.5rem;"></div>
+    </div>
+
+    <div class="footer-nota">
+        Baseado na tradição dos Padres do Deserto · Virtudes e vícios capitais
+    </div>
+</div>
+
+<script>
+    // ==============================================================
+    // 1. DADOS (pode ser movido para eneagramaData.js)
+    // ==============================================================
+    const TIPOS = [
+        {
+            id: 1,
+            nome: "O Reformador",
+            virtude: "Serenidade",
+            vicio: "Ira",
+            medo: "Ser corrupto, imperfeito",
+            desejo: "Ser bom, íntegro",
+            descricao: "O Reformador é consciente, ético e tem um forte senso de certo e errado. Busca melhorar o mundo e a si mesmo, mas pode cair no perfeccionismo e na rigidez. No caminho espiritual, aprende a aceitar a imperfeição e a descansar na graça.",
+            pergunta: "Sou muito atento a detalhes e organizado, e me incomodo com erros ou desordem.",
+            cor: "#8B5A2B"
+        },
+        {
+            id: 2,
+            nome: "O Ajudador",
+            virtude: "Humildade",
+            vicio: "Orgulho",
+            medo: "Ser indesejado, não amado",
+            desejo: "Ser amado e necessário",
+            descricao: "O Ajudador é generoso, acolhedor e se doa aos outros. Pode, porém, sacrificar suas próprias necessidades e manipular para ser indispensável. A virtude da humildade o ensina a receber e a reconhecer seus próprios limites.",
+            pergunta: "Gosto de ajudar os outros e sou muito generoso, muitas vezes colocando os outros em primeiro lugar.",
+            cor: "#C47B4A"
+        },
+        {
+            id: 3,
+            nome: "O Realizador",
+            virtude: "Verdade",
+            vicio: "Engano",
+            medo: "Ser fracassado, sem valor",
+            desejo: "Ser bem-sucedido e admirado",
+            descricao: "O Realizador é ambicioso, focado e adaptável. Busca excelência e reconhecimento, mas pode perder a conexão com seus sentimentos reais. A prática da verdade o ajuda a ser autêntico e a encontrar valor além do desempenho.",
+            pergunta: "Sou muito focado em metas e gosto de ser reconhecido pelo meu sucesso.",
+            cor: "#D4A24C"
+        },
+        {
+            id: 4,
+            nome: "O Romântico",
+            virtude: "Equanimidade",
+            vicio: "Inveja",
+            medo: "Ser comum, sem identidade",
+            desejo: "Ser único e especial",
+            descricao: "O Romântico é sensível, criativo e introspectivo. Busca significado e autenticidade, mas pode se sentir deficiente e comparar-se. A equanimidade traz paz interior e aceitação da própria essência.",
+            pergunta: "Sinto que sou diferente dos outros e busco profundamente minha identidade única.",
+            cor: "#7A5C7A"
+        },
+        {
+            id: 5,
+            nome: "O Observador",
+            virtude: "Desapego",
+            vicio: "Avareza",
+            medo: "Ser incapaz, inútil",
+            desejo: "Ser competente e entender o mundo",
+            descricao: "O Observador é analítico, independente e reservado. Acumula conhecimento para sentir segurança, mas pode se isolar. A virtude do desapego o convida a confiar na vida e a compartilhar seu saber.",
+            pergunta: "Prefiro observar e analisar as situações antes de agir, e valorizo meu espaço pessoal.",
+            cor: "#4A6B8A"
+        },
+        {
+            id: 6,
+            nome: "O Questionador",
+            virtude: "Coragem",
+            vicio: "Medo",
+            medo: "Ficar sem apoio, ser traído",
+            desejo: "Ter segurança e orientação",
+            descricao: "O Questionador é leal, vigilante e responsável. Antecipa problemas e busca proteção, mas a ansiedade pode dominá-lo. A coragem o ajuda a confiar em si mesmo e na vida, mesmo na incerteza.",
+            pergunta: "Costumo pensar nos piores cenários e busco segurança em pessoas ou instituições.",
+            cor: "#8F8A6B"
+        },
+        {
+            id: 7,
+            nome: "O Entusiasta",
+            virtude: "Sobriedade",
+            vicio: "Gula",
+            medo: "Ficar preso à dor ou ao tédio",
+            desejo: "Ser feliz e livre",
+            descricao: "O Entusiasta é otimista, espontâneo e busca novas experiências. Evita o sofrimento e pode dispersar-se. A sobriedade o ensina a encontrar contentamento no simples e a enfrentar a dor com maturidade.",
+            pergunta: "Sou otimista, adoro novidades e evito situações que me pareçam chatas ou dolorosas.",
+            cor: "#C49A6C"
+        },
+        {
+            id: 8,
+            nome: "O Desafiador",
+            virtude: "Inocência",
+            vicio: "Luxúria (excesso)",
+            medo: "Ser controlado, vulnerável",
+            desejo: "Proteger-se e ter controle",
+            descricao: "O Desafiador é forte, protetor e direto. Luta por justiça e não gosta de fraquezas, mas pode dominar os outros. A inocência o reconecta à leveza e à confiança no fluxo da vida.",
+            pergunta: "Sou decidido, defendo os outros e não gosto de ser controlado ou de mostrar vulnerabilidade.",
+            cor: "#A65A4A"
+        },
+        {
+            id: 9,
+            nome: "O Pacificador",
+            virtude: "Ação",
+            vicio: "Preguiça (acomodação)",
+            medo: "Perder a harmonia, ser excluído",
+            desejo: "Ter paz e união",
+            descricao: "O Pacificador é calmo, receptivo e mediador. Evita conflitos e pode se esquecer de si mesmo. A virtude da ação o motiva a ocupar seu lugar e a expressar sua vontade com amor.",
+            pergunta: "Evito conflitos e busco harmonia, muitas vezes concordando com os outros para manter a paz.",
+            cor: "#7A8B7A"
+        }
+    ];
+
+    // ==============================================================
+    // 2. LÓGICA DO TESTE
+    // ==============================================================
+
+    // Gerar as perguntas dinamicamente
+    function renderPerguntas() {
+        const container = document.getElementById('perguntas-container');
+        container.innerHTML = '';
+        TIPOS.forEach((tipo, index) => {
+            const div = document.createElement('div');
+            div.className = 'pergunta';
+            div.innerHTML = `
+                <p><strong>${index+1}.</strong> ${tipo.pergunta}</p>
+                <div class="likert">
+                    ${[1,2,3,4,5].map(val => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${val}" required>
+                            ${val}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Processar o formulário
+    function processarTeste(e) {
+        e.preventDefault();
+        const form = document.getElementById('form-teste');
+        const dados = new FormData(form);
+        // Soma as pontuações por tipo
+        const pontuacao = TIPOS.map(() => 0);
+        for (let i = 0; i < TIPOS.length; i++) {
+            const val = dados.get(`q${i}`);
+            if (val) {
+                pontuacao[i] = parseInt(val, 10);
+            }
+        }
+
+        // Calcular totais: cada pergunta corresponde a um tipo (índice)
+        // Mas a pontuação já está no índice correspondente, pois usamos i.
+        // No entanto, o FormData pode não manter a ordem se houver campos com mesmo nome? 
+        // Nós usamos nomes únicos q0, q1, ... q8, então está correto.
+        // Vamos criar um array de objetos { tipo, pontos }
+        const resultados = TIPOS.map((tipo, idx) => ({
+            tipo: tipo,
+            pontos: pontuacao[idx] || 0
+        }));
+
+        // Ordenar por pontos decrescente
+        resultados.sort((a, b) => b.pontos - a.pontos);
+
+        // Pegar a maior pontuação
+        const maxPontos = resultados[0].pontos;
+        const empatados = resultados.filter(r => r.pontos === maxPontos);
+
+        // Salvar no localStorage
+        const idsEmpatados = empatados.map(r => r.tipo.id);
+        localStorage.setItem('eneagrama_resultado', JSON.stringify({
+            ids: idsEmpatados,
+            data: new Date().toISOString()
+        }));
+
+        // Exibir resultado
+        exibirResultado(empatados, maxPontos);
+        // Mudar para aba "Meu Tipo"
+        mudarAba('resultado');
+    }
+
+    // Exibir resultado na própria aba de teste (ou redirecionar)
+    function exibirResultado(empatados, pontuacao) {
+        const container = document.getElementById('resultado-teste');
+        if (empatados.length === 1) {
+            const tipo = empatados[0].tipo;
+            container.innerHTML = `
+                <div class="card-tipo" style="border-left-color: ${tipo.cor};">
+                    <h2>Seu tipo principal é: ${tipo.nome}</h2>
+                    <div class="subtitulo">Pontuação: ${pontuacao} / 5</div>
+                    <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
+                    <div class="detalhe">
+                        <span class="detalhe-item">✨ Virtude: ${tipo.virtude}</span>
+                        <span class="detalhe-item">🔥 Vício: ${tipo.vicio}</span>
+                        <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
+                        <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Empate
+            const nomes = empatados.map(r => r.tipo.nome).join(' e ');
+            container.innerHTML = `
+                <div class="card-tipo" style="border-left-color: #b8a99a;">
+                    <h2>Empate entre: ${nomes}</h2>
+                    <p>Você tem características fortes de mais de um tipo. Leia sobre todos eles para se aprofundar.</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;">
+                        ${empatados.map(r => `
+                            <span class="badge-tipo" style="background: ${r.tipo.cor}; color: #fff;">${r.tipo.nome}</span>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        // Salvar também no container de "Meu Tipo"
+        carregarMeuTipo();
+    }
+
+    // ==============================================================
+    // 3. EXIBIR "MEU TIPO" (salvo)
+    // ==============================================================
+
+    function carregarMeuTipo() {
+        const container = document.getElementById('meu-tipo-container');
+        const stored = localStorage.getItem('eneagrama_resultado');
+        if (!stored) {
+            container.innerHTML = `<p style="color: #6f5f4e;">Você ainda não fez o teste. Vá para a aba <strong>Teste</strong> e descubra seu tipo.</p>`;
+            return;
+        }
+        const data = JSON.parse(stored);
+        const ids = data.ids;
+        const tiposEncontrados = TIPOS.filter(t => ids.includes(t.id));
+
+        if (tiposEncontrados.length === 0) {
+            container.innerHTML = `<p style="color: #6f5f4e;">Nenhum tipo encontrado. Faça o teste novamente.</p>`;
+            return;
+        }
+
+        if (tiposEncontrados.length === 1) {
+            const tipo = tiposEncontrados[0];
+            container.innerHTML = `
+                <div class="card-tipo" style="border-left-color: ${tipo.cor};">
+                    <h2>${tipo.nome}</h2>
+                    <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
+                    <p>${tipo.descricao}</p>
+                    <div class="detalhe">
+                        <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
+                        <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+                    </div>
+                    <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
+                        🌱 Sugestão de crescimento: ${tipo.virtude} – pratique a ${tipo.virtude.toLowerCase()} no seu dia a dia.
+                    </p>
+                </div>
+            `;
+        } else {
+            // múltiplos empatados
+            container.innerHTML = `
+                <div class="card-tipo" style="border-left-color: #b8a99a;">
+                    <h2>Tipos em destaque</h2>
+                    <p>Você apresentou equilíbrio entre estes tipos:</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.8rem 0;">
+                        ${tiposEncontrados.map(t => `
+                            <span class="badge-tipo" style="background: ${t.cor}; color: #fff;">${t.nome}</span>
+                        `).join('')}
+                    </div>
+                    <p>Explore o catálogo para conhecer todos eles.</p>
+                </div>
+            `;
+        }
+    }
+
+    // ==============================================================
+    // 4. CATÁLOGO
+    // ==============================================================
+
+    function renderCatalogo() {
+        const container = document.getElementById('catalogo-container');
+        container.innerHTML = '';
+        TIPOS.forEach(tipo => {
+            const div = document.createElement('div');
+            div.className = 'item-catalogo';
+            div.style.borderLeftColor = tipo.cor;
+            div.innerHTML = `
+                <div class="nome-tipo">${tipo.nome}</div>
+                <div class="virt-vicio">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
+            `;
+            div.addEventListener('click', () => exibirDetalheCatalogo(tipo.id));
+            container.appendChild(div);
+        });
+        // Se houver um tipo salvo, destacar? Não necessário.
+    }
+
+    function exibirDetalheCatalogo(id) {
+        const tipo = TIPOS.find(t => t.id === id);
+        if (!tipo) return;
+        const container = document.getElementById('detalhe-catalogo');
+        container.innerHTML = `
+            <div class="card-tipo" style="border-left-color: ${tipo.cor};">
+                <h2>${tipo.nome}</h2>
+                <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
+                <p>${tipo.descricao}</p>
+                <div class="detalhe">
+                    <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
+                    <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+                </div>
+                <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
+                    🌱 Caminho espiritual: cultivar a ${tipo.virtude.toLowerCase()} e transmutar o ${tipo.vicio.toLowerCase()}.
+                </p>
+            </div>
+        `;
+        // Scroll para o detalhe
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ==============================================================
+    // 5. NAVEGAÇÃO POR ABAS
+    // ==============================================================
+
+    function mudarAba(abaId) {
+        // Esconder todas
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+        // Mostrar a escolhida
+        const tabContent = document.getElementById(`tab-${abaId}`);
+        if (tabContent) tabContent.classList.add('active');
+        const tabBtn = document.querySelector(`.tab-btn[data-tab="${abaId}"]`);
+        if (tabBtn) tabBtn.classList.add('active');
+    }
+
+    // Event listeners das abas
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tab = this.dataset.tab;
+            mudarAba(tab);
+        });
+    });
+
+    // ==============================================================
+    // 6. INICIALIZAÇÃO
+    // ==============================================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Renderizar perguntas
+        renderPerguntas();
+
+        // Evento do formulário
+        document.getElementById('form-teste').addEventListener('submit', processarTeste);
+
+        // Carregar resultado salvo
+        carregarMeuTipo();
+
+        // Renderizar catálogo
+        renderCatalogo();
+
+        // Botão "Ver todos os tipos" na aba Meu Tipo
+        document.getElementById('btn-ver-todos').addEventListener('click', function() {
+            mudarAba('catalogo');
+        });
+
+        // Se houver um resultado salvo, ao carregar a aba resultado já mostra.
+        // Se não, já mostra a mensagem.
+    });
+
+</script>
+</body>
+</html>
