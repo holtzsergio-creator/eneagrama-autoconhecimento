@@ -413,26 +413,36 @@
     // ==============================================================
 
     // Gerar as perguntas dinamicamente
-    function renderPerguntas() {
-        const container = document.getElementById('perguntas-container');
-        container.innerHTML = '';
-        TIPOS.forEach((tipo, index) => {
-            const div = document.createElement('div');
-            div.className = 'pergunta';
-            div.innerHTML = `
-                <p><strong>${index+1}.</strong> ${tipo.pergunta}</p>
-                <div class="likert">
-                    ${[1,2,3,4,5].map(val => `
-                        <label>
-                            <input type="radio" name="q${index}" value="${val}" required>
-                            ${val}
-                        </label>
-                    `).join('')}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
+    function renderPerguntas() {function renderPerguntas() {
+    const container = document.getElementById('perguntas-container');
+    container.innerHTML = '';
+    TIPOS.forEach((tipo, index) => {
+        const div = document.createElement('div');
+        div.className = 'pergunta';
+        div.innerHTML = `
+            <p><strong>${index+1}.</strong> ${tipo.pergunta}</p>
+            <div class="likert">
+                <label>
+                    <input type="radio" name="q${index}" value="1" required>
+                    1 - Discordo totalmente
+                </label>
+                <label>
+                    <input type="radio" name="q${index}" value="2" required>
+                    2 - Discordo parcialmente
+                </label>
+                <label>
+                    <input type="radio" name="q${index}" value="3" required>
+                    3 - Concordo parcialmente
+                </label>
+                <label>
+                    <input type="radio" name="q${index}" value="4" required>
+                    4 - Concordo totalmente
+                </label>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
 
     // Processar o formulário
     function processarTeste(e) {
