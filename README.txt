@@ -38,4 +38,19 @@ Este projeto combina:
 4. Navegue pelo catálogo para conhecer todos os tipos
 
 ## 📂 Estrutura do Projeto
+├── index.html # Página principal (HTML + CSS + JS)
+├── eneagramaData.js # Dados dos 9 tipos (opcional)
+└── README.md # Este arquivo
 
+
+## 🌱 Inspiração
+
+Baseado na tradição dos Padres do Deserto e na visão cristã do autoconhecimento como caminho para a virtude e a transformação espiritual.
+
+## 📝 Licença
+
+MIT - Sinta-se livre para usar, modificar e compartilhar.
+
+---
+
+Desenvolvido com ❤️ para jornadas de autodescoberta.
