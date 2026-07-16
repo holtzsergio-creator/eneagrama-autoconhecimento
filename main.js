@@ -168,7 +168,7 @@ function exibirResultado(empatados, pontuacao, metodo) {
 
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-                <h2>Seu tipo principal é: ${tipo.nome}</h2>
+                <h2>Seu tipo principal é: <span style="font-weight: bold;">${tipo.id}.</span> ${tipo.nome}</h2>
                 <div class="subtitulo">${metodo === 'teste-likert' ? `Pontuação: ${pontuacao} / 4` : 'Método Riso-Hudson'} · ${nomeMetodo}</div>
                 <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
 
@@ -178,12 +178,12 @@ function exibirResultado(empatados, pontuacao, metodo) {
                     <div class="setas-grid">
                         <div class="seta-estresse">
                             <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
-                            <div class="seta-nome">${tipoEstresse.nome}</div>
+                            <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
                             <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
                         </div>
                         <div class="seta-crescimento">
                             <div class="seta-label">⬆️ Em Crescimento (integração)</div>
-                            <div class="seta-nome">${tipoCrescimento.nome}</div>
+                            <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
                             <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
                         </div>
                     </div>
@@ -206,14 +206,14 @@ function exibirResultado(empatados, pontuacao, metodo) {
         `;
     } else {
         // EMPATE
-        const nomes = empatados.map(r => r.tipo.nome).join(' e ');
+        const nomes = empatados.map(r => `${r.tipo.id}. ${r.tipo.nome}`).join(' e ');
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: #b8a99a;">
                 <h2>Empate entre: ${nomes}</h2>
                 <p>Você tem características fortes de mais de um tipo. Leia sobre todos eles para se aprofundar.</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;">
                     ${empatados.map(r => `
-                        <span class="badge-tipo" style="background: ${r.tipo.cor}; color: #fff;">${r.tipo.nome}</span>
+                        <span class="badge-tipo" style="background: ${r.tipo.cor}; color: #fff;">${r.tipo.id}. ${r.tipo.nome}</span>
                     `).join('')}
                 </div>
                 <p style="margin-top: 0.8rem; font-size: 0.9rem; color: #6f5f4e;">Explore o catálogo para conhecer todos os tipos e suas setas de movimento.</p>
@@ -324,7 +324,7 @@ function renderCatalogo() {
         div.className = 'item-catalogo';
         div.style.borderLeftColor = tipo.cor;
         div.innerHTML = `
-            <div class="nome-tipo">${tipo.nome}</div>
+            <div class="nome-tipo"><span style="font-weight: bold;">${tipo.id}.</span> ${tipo.nome}</div>
             <div class="virt-vicio">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
         `;
         div.addEventListener('click', () => exibirDetalheCatalogo(tipo.id));
@@ -342,7 +342,7 @@ function exibirDetalheCatalogo(id) {
     const container = document.getElementById('detalhe-catalogo');
     container.innerHTML = `
         <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-            <h2>${tipo.nome}</h2>
+            <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span> ${tipo.nome}</h2>
             <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
             <p>${tipo.descricao}</p>
 
@@ -352,12 +352,12 @@ function exibirDetalheCatalogo(id) {
                 <div class="setas-grid">
                     <div class="seta-estresse">
                         <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
-                        <div class="seta-nome">${tipoEstresse.nome}</div>
+                        <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
                         <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
                     </div>
                     <div class="seta-crescimento">
                         <div class="seta-label">⬆️ Em Crescimento (integração)</div>
-                        <div class="seta-nome">${tipoCrescimento.nome}</div>
+                        <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
                         <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
                     </div>
                 </div>
