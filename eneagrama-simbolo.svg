@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 300 300" width="220" height="220">
+    <!-- Estilos -->
+    <style>
+        .circulo { fill: none; stroke: #5a4c3e; stroke-width: 2; }
+        .triangulo { fill: none; stroke: #8B5A2B; stroke-width: 2; }
+        .hexagono { fill: none; stroke: #4A6B8A; stroke-width: 1.5; }
+        .seta { fill: none; stroke: #4A6B8A; stroke-width: 1.5; marker-end: url(#seta); }
+        .numero { font-family: 'Georgia', serif; font-size: 16px; fill: #3e3a36; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+        .ponto { fill: #b8a99a; stroke: #5a4c3e; stroke-width: 1; }
+    </style>
+
+    <!-- Definição da seta -->
+    <defs>
+        <marker id="seta" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+            <polygon points="0 0, 6 3, 0 6" fill="#4A6B8A" />
+        </marker>
+    </defs>
+
+    <!-- Círculo externo (raio 120) -->
+    <circle cx="0" cy="0" r="120" class="circulo"/>
+
+    <!-- Triângulo EQUILÁTERO (9-6-3) -->
+    <!-- 9: 0°, 6: 240°, 3: 120° -->
+    <polygon points="0,-120  -103.92,60  103.92,60" class="triangulo"/>
+
+    <!-- Hexágono irregular (1-4-2-8-5-7) seguindo a Lei do 7 -->
+    <!-- 1: 40°, 4: 160°, 2: 80°, 8: 320°, 5: 200°, 7: 280° -->
+    <polygon points="77.13,-91.93  41.04,112.76  118.18,-20.84  -77.13,-91.93  -41.04,112.76  -118.18,-20.84" class="hexagono"/>
+
+    <!-- Setas do hexágono (1→4→2→8→5→7→1) -->
+    <line x1="77.13" y1="-91.93" x2="41.04" y2="112.76" class="seta"/>
+    <line x1="41.04" y1="112.76" x2="118.18" y2="-20.84" class="seta"/>
+    <line x1="118.18" y1="-20.84" x2="-77.13" y2="-91.93" class="seta"/>
+    <line x1="-77.13" y1="-91.93" x2="-41.04" y2="112.76" class="seta"/>
+    <line x1="-41.04" y1="112.76" x2="-118.18" y2="-20.84" class="seta"/>
+    <line x1="-118.18" y1="-20.84" x2="77.13" y2="-91.93" class="seta"/>
+
+    <!-- Pontos e números (posições exatas com 40° de intervalo) -->
+
+    <!-- 9: 0° (topo) -->
+    <circle cx="0" cy="-120" r="4" class="ponto"/>
+    <text x="0" y="-132" class="numero">9</text>
+
+    <!-- 1: 40° -->
+    <circle cx="77.13" cy="-91.93" r="4" class="ponto"/>
+    <text x="77.13" y="-104" class="numero">1</text>
+
+    <!-- 2: 80° -->
+    <circle cx="118.18" cy="-20.84" r="4" class="ponto"/>
+    <text x="118.18" y="-33" class="numero">2</text>
+
+    <!-- 3: 120° -->
+    <circle cx="103.92" cy="60" r="4" class="ponto"/>
+    <text x="103.92" y="72" class="numero">3</text>
+
+    <!-- 4: 160° -->
+    <circle cx="41.04" cy="112.76" r="4" class="ponto"/>
+    <text x="41.04" y="127" class="numero">4</text>
+
+    <!-- 5: 200° -->
+    <circle cx="-41.04" cy="112.76" r="4" class="ponto"/>
+    <text x="-41.04" y="127" class="numero">5</text>
+
+    <!-- 6: 240° -->
+    <circle cx="-103.92" cy="60" r="4" class="ponto"/>
+    <text x="-103.92" y="72" class="numero">6</text>
+
+    <!-- 7: 280° -->
+    <circle cx="-118.18" cy="-20.84" r="4" class="ponto"/>
+    <text x="-118.18" y="-33" class="numero">7</text>
+
+    <!-- 8: 320° -->
+    <circle cx="-77.13" cy="-91.93" r="4" class="ponto"/>
+    <text x="-77.13" y="-104" class="numero">8</text>
+
+</svg>
