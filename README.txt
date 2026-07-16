@@ -38,8 +38,12 @@ Este projeto combina:
 4. Navegue pelo catálogo para conhecer todos os tipos
 
 ## 📂 Estrutura do Projeto
-├── index.html # Página principal (HTML + CSS + JS)
-├── eneagramaData.js # Dados dos 9 tipos (opcional)
+eneagrama-autoconhecimento/
+├── index.html          # Página principal (com abas e navegação)
+├── eneagramaData.js    # Dados dos 9 tipos
+├── triagemData.js      # Dados da triagem Riso-Hudson
+├── main.js             # Lógica principal (teste, triagem, resultado)
+└── style.css           # Estilos CSS
 └── README.md # Este arquivo
 
 
