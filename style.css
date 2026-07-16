@@ -1,0 +1,326 @@
+/* ==============================================================
+   RESET E BASE
+   ============================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #f7f2eb;
+    color: #3e3a36;
+    padding: 2rem 1rem;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fffcf8;
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #5a4c3e;
+    border-bottom: 1px solid #e3d9cf;
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.8rem;
+    text-align: center;
+}
+
+
+/* ==============================================================
+   NAVEGAÇÃO POR ABAS
+   ============================================================== */
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab-btn {
+    background: #ede7e0;
+    border: none;
+    padding: 0.6rem 1.8rem;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 40px;
+    color: #5a4c3e;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.tab-btn:hover {
+    background: #ddd4ca;
+}
+
+.tab-btn.active {
+    background: #b8a99a;
+    color: #fffcf8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tab-content {
+    display: none;
+    animation: fade 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fade {
+    0% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+
+/* ==============================================================
+   COMPONENTES
+   ============================================================== */
+
+/* --- Perguntas do Teste --- */
+.pergunta {
+    background: #f8f3ed;
+    padding: 1.2rem 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 1.2rem;
+    border-left: 6px solid #b8a99a;
+}
+
+.pergunta p {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+}
+
+.likert {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    margin-top: 0.5rem;
+}
+
+.likert label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    background: #fffcf8;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    border: 1px solid #d6cbbc;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.likert label:hover {
+    background: #ede7e0;
+}
+
+.likert input[type="radio"] {
+    accent-color: #8f7a66;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+
+/* --- Triagem Rápida --- */
+.grupo-triagem {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.opcao-triagem {
+    background: #f8f3ed;
+    padding: 1.2rem 1.5rem;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.opcao-triagem:hover {
+    background: #ede7e0;
+}
+
+.opcao-triagem.selecionado {
+    border-color: #b8a99a;
+    background: #e8dfd6;
+}
+
+.opcao-triagem input[type="radio"] {
+    margin-right: 0.6rem;
+    accent-color: #8f7a66;
+    transform: scale(1.1);
+}
+
+.opcao-triagem .letra {
+    font-weight: bold;
+    display: inline-block;
+    width: 1.8rem;
+    color: #8f7a66;
+}
+
+
+/* --- Botões --- */
+.btn {
+    background: #b8a99a;
+    border: none;
+    color: #fffcf8;
+    font-family: inherit;
+    font-size: 1.1rem;
+    padding: 0.7rem 2.2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 0.5rem;
+}
+
+.btn:hover {
+    background: #a08d7c;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #ede7e0;
+    color: #5a4c3e;
+}
+
+.btn-secondary:hover {
+    background: #ddd4ca;
+}
+
+
+/* --- Cards de Tipo --- */
+.card-tipo {
+    background: #f8f3ed;
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    margin-top: 1rem;
+    border-left: 8px solid #b8a99a;
+}
+
+.card-tipo h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+}
+
+.card-tipo .subtitulo {
+    font-size: 1.1rem;
+    color: #6f5f4e;
+    margin-bottom: 1rem;
+}
+
+.badge-tipo {
+    display: inline-block;
+    padding: 0.2rem 1rem;
+    border-radius: 30px;
+    background: #e3d9cf;
+    color: #3e3a36;
+    font-size: 0.9rem;
+    margin-right: 0.4rem;
+}
+
+.detalhe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin: 1rem 0;
+}
+
+.detalhe-item {
+    background: #fffcf8;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    border: 1px solid #d6cbbc;
+    font-size: 0.95rem;
+}
+
+
+/* --- Catálogo --- */
+.lista-tipos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.item-catalogo {
+    background: #f8f3ed;
+    padding: 1rem 1.2rem;
+    border-radius: 16px;
+    border-left: 5px solid #b8a99a;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.item-catalogo:hover {
+    background: #ede7e0;
+    transform: translateY(-2px);
+}
+
+.item-catalogo .nome-tipo {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.item-catalogo .virt-vicio {
+    font-size: 0.9rem;
+    color: #6f5f4e;
+}
+
+
+/* --- Rodapé --- */
+.footer-nota {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e3d9cf;
+    font-size: 0.9rem;
+    color: #8f7a66;
+    text-align: center;
+}
+
+
+/* ==============================================================
+   RESPONSIVO
+   ============================================================== */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1.2rem;
+    }
+    
+    .likert {
+        grid-template-columns: 1fr;
+    }
+    
+    .likert label {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .detalhe {
+        gap: 0.5rem;
+    }
+    
+    .opcao-triagem {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+}
