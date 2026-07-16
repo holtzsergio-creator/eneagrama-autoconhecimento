@@ -10,7 +10,90 @@
     <div class="container">
         <h1>🌿 Eneagrama · Caminho Interior</h1>
 
-        <!-- Abas -->
+        <!-- ============================================================ -->
+        <!-- SÍMBOLO DO ENEAGRAMA (SVG)                                     -->
+        <!-- ============================================================ -->
+        <div style="text-align: center; margin: 1.5rem 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 300 300" width="220" height="220">
+                <!-- Estilos -->
+                <style>
+                    .circulo { fill: none; stroke: #5a4c3e; stroke-width: 2; }
+                    .triangulo { fill: none; stroke: #8B5A2B; stroke-width: 2; }
+                    .hexagono { fill: none; stroke: #4A6B8A; stroke-width: 1.5; }
+                    .seta { fill: none; stroke: #4A6B8A; stroke-width: 1.5; marker-end: url(#seta); }
+                    .numero { font-family: 'Georgia', serif; font-size: 16px; fill: #3e3a36; font-weight: bold; }
+                    .ponto { fill: #b8a99a; stroke: #5a4c3e; stroke-width: 1; }
+                </style>
+
+                <!-- Definição da seta -->
+                <defs>
+                    <marker id="seta" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0 0, 6 3, 0 6" fill="#4A6B8A" />
+                    </marker>
+                </defs>
+
+                <!-- Círculo externo (raio 120) -->
+                <circle cx="0" cy="0" r="120" class="circulo"/>
+
+                <!-- Triângulo (9-6-3) -->
+                <!-- 9: topo (90°), 6: inferior esquerdo (210°), 3: inferior direito (330°) -->
+                <polygon points="0,-120  -103.9,60  103.9,60" class="triangulo"/>
+
+                <!-- Hexágono irregular (1-4-2-8-5-7) seguindo a Lei do 7 -->
+                <polygon points="60,-103.9  -60,-103.9  -120,0  0,120  120,0  -60,103.9" class="hexagono"/>
+
+                <!-- Setas do hexágono (1→4→2→8→5→7→1) -->
+                <line x1="60" y1="-103.9" x2="-60" y2="-103.9" class="seta"/>
+                <line x1="-60" y1="-103.9" x2="0" y2="120" class="seta"/>
+                <line x1="0" y1="120" x2="120" y2="0" class="seta"/>
+                <line x1="120" y1="0" x2="-120" y2="0" class="seta"/>
+                <line x1="-120" y1="0" x2="-60" y2="103.9" class="seta"/>
+                <line x1="-60" y1="103.9" x2="60" y2="-103.9" class="seta"/>
+
+                <!-- Pontos e números -->
+
+                <!-- Tipo 1: 30° (canto superior direito) -->
+                <circle cx="60" cy="-103.9" r="4" class="ponto"/>
+                <text x="72" y="-100" class="numero">1</text>
+
+                <!-- Tipo 2: 90° (direita) -->
+                <circle cx="120" cy="0" r="4" class="ponto"/>
+                <text x="132" y="5" class="numero">2</text>
+
+                <!-- Tipo 3: 150° (inferior direito) -->
+                <circle cx="103.9" cy="60" r="4" class="ponto"/>
+                <text x="115" y="75" class="numero">3</text>
+
+                <!-- Tipo 4: 210° (inferior esquerdo) -->
+                <circle cx="-103.9" cy="60" r="4" class="ponto"/>
+                <text x="-125" y="75" class="numero">4</text>
+
+                <!-- Tipo 5: 270° (esquerda) -->
+                <circle cx="-120" cy="0" r="4" class="ponto"/>
+                <text x="-140" y="5" class="numero">5</text>
+
+                <!-- Tipo 6: 330° (superior esquerdo) -->
+                <circle cx="-60" cy="-103.9" r="4" class="ponto"/>
+                <text x="-80" y="-100" class="numero">6</text>
+
+                <!-- Tipo 7: 30° (topo) -->
+                <circle cx="0" cy="-120" r="4" class="ponto"/>
+                <text x="-10" y="-135" class="numero">7</text>
+
+                <!-- Tipo 8: 90° (canto superior direito) -->
+                <circle cx="60" cy="-103.9" r="4" class="ponto"/>
+                <text x="72" y="-100" class="numero">8</text>
+
+                <!-- Tipo 9: 150° (topo) -->
+                <circle cx="0" cy="-120" r="4" class="ponto"/>
+                <text x="-10" y="-135" class="numero">9</text>
+
+            </svg>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ABAS                                                         -->
+        <!-- ============================================================ -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="teste">📋 Teste</button>
             <button class="tab-btn" data-tab="triagem">⚡ Triagem Rápida</button>
@@ -18,7 +101,9 @@
             <button class="tab-btn" data-tab="catalogo">📚 Catálogo</button>
         </div>
 
-        <!-- Aba: Teste Likert -->
+        <!-- ============================================================ -->
+        <!-- ABA: TESTE LIKERT                                             -->
+        <!-- ============================================================ -->
         <div id="tab-teste" class="tab-content active">
             <p style="margin-bottom: 1.5rem; color: #6f5f4e;">
                 Responda cada frase com o quanto você se identifica.
@@ -30,7 +115,9 @@
             <div id="resultado-teste" style="margin-top: 1.5rem;"></div>
         </div>
 
-        <!-- Aba: Triagem Rápida -->
+        <!-- ============================================================ -->
+        <!-- ABA: TRIAGEM RÁPIDA                                           -->
+        <!-- ============================================================ -->
         <div id="tab-triagem" class="tab-content">
             <p style="margin-bottom: 1.5rem; color: #6f5f4e;">
                 Escolha um parágrafo em cada grupo que melhor descreve sua essência.
@@ -49,7 +136,9 @@
             <div id="resultado-triagem" style="margin-top: 1.5rem;"></div>
         </div>
 
-        <!-- Aba: Meu Tipo -->
+        <!-- ============================================================ -->
+        <!-- ABA: MEU TIPO                                                 -->
+        <!-- ============================================================ -->
         <div id="tab-resultado" class="tab-content">
             <div id="meu-tipo-container">
                 <p style="color: #6f5f4e;">Faça o teste ou a triagem para descobrir seu tipo principal.</p>
@@ -57,12 +146,17 @@
             <button id="btn-ver-todos" class="btn btn-secondary" style="margin-top: 1rem;">Ver todos os tipos</button>
         </div>
 
-        <!-- Aba: Catálogo -->
+        <!-- ============================================================ -->
+        <!-- ABA: CATÁLOGO                                                 -->
+        <!-- ============================================================ -->
         <div id="tab-catalogo" class="tab-content">
             <div id="catalogo-container" class="lista-tipos"></div>
             <div id="detalhe-catalogo" style="margin-top: 1.5rem;"></div>
         </div>
 
+        <!-- ============================================================ -->
+        <!-- RODAPÉ                                                        -->
+        <!-- ============================================================ -->
         <div class="footer-nota">
             Baseado na tradição dos Padres do Deserto · Virtudes e vícios capitais
         </div>
