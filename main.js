@@ -70,40 +70,6 @@ function processarTeste(e) {
     mudarAba('resultado');
 }
 
-function exibirResultado(empatados, pontuacao, metodo) {
-    const container = document.getElementById('resultado-teste');
-    if (empatados.length === 1) {
-        const tipo = empatados[0].tipo;
-        container.innerHTML = `
-            <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-                <h2>Seu tipo principal é: ${tipo.nome}</h2>
-                <div class="subtitulo">Pontuação: ${pontuacao} / 4 · Método: ${metodo === 'teste-likert' ? 'Teste Likert' : 'Triagem Rápida'}</div>
-                <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
-                <div class="detalhe">
-                    <span class="detalhe-item">✨ Virtude: ${tipo.virtude}</span>
-                    <span class="detalhe-item">🔥 Vício: ${tipo.vicio}</span>
-                    <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
-                    <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
-                </div>
-            </div>
-        `;
-    } else {
-        const nomes = empatados.map(r => r.tipo.nome).join(' e ');
-        container.innerHTML = `
-            <div class="card-tipo" style="border-left-color: #b8a99a;">
-                <h2>Empate entre: ${nomes}</h2>
-                <p>Você tem características fortes de mais de um tipo. Leia sobre todos eles para se aprofundar.</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;">
-                    ${empatados.map(r => `
-                        <span class="badge-tipo" style="background: ${r.tipo.cor}; color: #fff;">${r.tipo.nome}</span>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-    carregarMeuTipo();
-}
-
 
 // ==============================================================
 // 2. TRIAGEM RÁPIDA (Riso-Hudson)
@@ -124,7 +90,6 @@ function renderTriagem() {
                 <span class="letra">${letra}.</span> ${dados.texto}
             </label>
         `;
-        // Adicionar classe 'selecionado' visualmente
         const radio = div.querySelector('input');
         radio.addEventListener('change', function() {
             document.querySelectorAll('#grupo-I .opcao-triagem').forEach(el => el.classList.remove('selecionado'));
@@ -180,40 +145,93 @@ function processarTriagem(e) {
             metodo: 'triagem-rapida',
             data: new Date().toISOString()
         }));
-        exibirResultadoTriagem(tipo);
+        exibirResultado([{ tipo: tipo, pontos: 0 }], 0, 'triagem-rapida');
         mudarAba('resultado');
     } else {
         alert('Nenhum tipo encontrado. Tente novamente.');
     }
 }
 
-function exibirResultadoTriagem(tipo) {
-    const container = document.getElementById('resultado-triagem');
-    container.innerHTML = `
-        <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-            <h2>Seu tipo pela Triagem Rápida: ${tipo.nome}</h2>
-            <div class="subtitulo">Método Riso-Hudson</div>
-            <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
-            <div class="detalhe">
-                <span class="detalhe-item">✨ Virtude: ${tipo.virtude}</span>
-                <span class="detalhe-item">🔥 Vício: ${tipo.vicio}</span>
-                <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
-                <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+
+// ==============================================================
+// 3. EXIBIR RESULTADO (COM SETAS DE MOVIMENTO)
+// ==============================================================
+
+function exibirResultado(empatados, pontuacao, metodo) {
+    const container = document.getElementById('resultado-teste');
+    const nomeMetodo = metodo === 'teste-likert' ? 'Teste Likert' : 'Triagem Rápida (Riso-Hudson)';
+
+    if (empatados.length === 1) {
+        const tipo = empatados[0].tipo;
+        const tipoEstresse = TIPOS.find(t => t.id === tipo.setaEstresse);
+        const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
+
+        container.innerHTML = `
+            <div class="card-tipo" style="border-left-color: ${tipo.cor};">
+                <h2>Seu tipo principal é: ${tipo.nome}</h2>
+                <div class="subtitulo">${metodo === 'teste-likert' ? `Pontuação: ${pontuacao} / 4` : 'Método Riso-Hudson'} · ${nomeMetodo}</div>
+                <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
+
+                <!-- SETAS DE MOVIMENTO -->
+                <div class="setas-container">
+                    <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
+                    <div class="setas-grid">
+                        <div class="seta-estresse">
+                            <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
+                            <div class="seta-nome">${tipoEstresse.nome}</div>
+                            <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
+                        </div>
+                        <div class="seta-crescimento">
+                            <div class="seta-label">⬆️ Em Crescimento (integração)</div>
+                            <div class="seta-nome">${tipoCrescimento.nome}</div>
+                            <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
+                        </div>
+                    </div>
+                    <div class="seta-explicacao">
+                        <strong>📖 Sobre as setas:</strong> Quando sob estresse, você pode assumir traços negativos do tipo indicado em <strong>estresse</strong>. 
+                        Em crescimento, você pode acessar virtudes do tipo indicado em <strong>crescimento</strong>.
+                        <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
+                    </div>
+                </div>
+
+                <div class="detalhe">
+                    <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
+                    <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+                </div>
+                <div class="detalhe">
+                    <span class="detalhe-item">✨ Virtude: ${tipo.virtude}</span>
+                    <span class="detalhe-item">🔥 Vício: ${tipo.vicio}</span>
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    } else {
+        // EMPATE
+        const nomes = empatados.map(r => r.tipo.nome).join(' e ');
+        container.innerHTML = `
+            <div class="card-tipo" style="border-left-color: #b8a99a;">
+                <h2>Empate entre: ${nomes}</h2>
+                <p>Você tem características fortes de mais de um tipo. Leia sobre todos eles para se aprofundar.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;">
+                    ${empatados.map(r => `
+                        <span class="badge-tipo" style="background: ${r.tipo.cor}; color: #fff;">${r.tipo.nome}</span>
+                    `).join('')}
+                </div>
+                <p style="margin-top: 0.8rem; font-size: 0.9rem; color: #6f5f4e;">Explore o catálogo para conhecer todos os tipos e suas setas de movimento.</p>
+            </div>
+        `;
+    }
     carregarMeuTipo();
 }
 
 
 // ==============================================================
-// 3. EXIBIR "MEU TIPO" (salvo)
+// 4. EXIBIR "MEU TIPO" (SALVO)
 // ==============================================================
 
 function carregarMeuTipo() {
     const container = document.getElementById('meu-tipo-container');
     const stored = localStorage.getItem('eneagrama_resultado');
-    
+
     if (!stored) {
         container.innerHTML = `<p style="color: #6f5f4e;">Você ainda não fez nenhum teste. Vá para a aba <strong>Teste</strong> ou <strong>Triagem Rápida</strong> e descubra seu tipo.</p>`;
         return;
@@ -229,18 +247,44 @@ function carregarMeuTipo() {
         return;
     }
 
-    const nomeMetodo = metodo === 'teste-likert' ? 'Teste Likert' : 
-                       metodo === 'triagem-rapida' ? 'Triagem Rápida (Riso-Hudson)' : 
-                       'Método desconhecido';
+    const nomeMetodo = metodo === 'teste-likert' ? 'Teste Likert' :
+        metodo === 'triagem-rapida' ? 'Triagem Rápida (Riso-Hudson)' :
+        'Método desconhecido';
 
     if (tiposEncontrados.length === 1) {
         const tipo = tiposEncontrados[0];
+        const tipoEstresse = TIPOS.find(t => t.id === tipo.setaEstresse);
+        const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
+
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: ${tipo.cor};">
                 <h2>${tipo.nome}</h2>
                 <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
                 <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
                 <p>${tipo.descricao}</p>
+
+                <!-- SETAS DE MOVIMENTO -->
+                <div class="setas-container">
+                    <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
+                    <div class="setas-grid">
+                        <div class="seta-estresse">
+                            <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
+                            <div class="seta-nome">${tipoEstresse.nome}</div>
+                            <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
+                        </div>
+                        <div class="seta-crescimento">
+                            <div class="seta-label">⬆️ Em Crescimento (integração)</div>
+                            <div class="seta-nome">${tipoCrescimento.nome}</div>
+                            <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
+                        </div>
+                    </div>
+                    <div class="seta-explicacao">
+                        <strong>📖 Sobre as setas:</strong> Quando sob estresse, você pode assumir traços negativos do tipo indicado em <strong>estresse</strong>. 
+                        Em crescimento, você pode acessar virtudes do tipo indicado em <strong>crescimento</strong>.
+                        <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
+                    </div>
+                </div>
+
                 <div class="detalhe">
                     <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
                     <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
@@ -269,7 +313,7 @@ function carregarMeuTipo() {
 
 
 // ==============================================================
-// 4. CATÁLOGO
+// 5. CATÁLOGO
 // ==============================================================
 
 function renderCatalogo() {
@@ -291,12 +335,39 @@ function renderCatalogo() {
 function exibirDetalheCatalogo(id) {
     const tipo = TIPOS.find(t => t.id === id);
     if (!tipo) return;
+
+    const tipoEstresse = TIPOS.find(t => t.id === tipo.setaEstresse);
+    const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
+
     const container = document.getElementById('detalhe-catalogo');
     container.innerHTML = `
         <div class="card-tipo" style="border-left-color: ${tipo.cor};">
             <h2>${tipo.nome}</h2>
             <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
             <p>${tipo.descricao}</p>
+
+            <!-- SETAS DE MOVIMENTO -->
+            <div class="setas-container">
+                <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
+                <div class="setas-grid">
+                    <div class="seta-estresse">
+                        <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
+                        <div class="seta-nome">${tipoEstresse.nome}</div>
+                        <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
+                    </div>
+                    <div class="seta-crescimento">
+                        <div class="seta-label">⬆️ Em Crescimento (integração)</div>
+                        <div class="seta-nome">${tipoCrescimento.nome}</div>
+                        <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
+                    </div>
+                </div>
+                <div class="seta-explicacao">
+                    <strong>📖 Sobre as setas:</strong> Quando sob estresse, este tipo pode assumir traços negativos do tipo em <strong>estresse</strong>. 
+                    Em crescimento, pode acessar virtudes do tipo em <strong>crescimento</strong>.
+                    <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
+                </div>
+            </div>
+
             <div class="detalhe">
                 <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
                 <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
@@ -311,7 +382,7 @@ function exibirDetalheCatalogo(id) {
 
 
 // ==============================================================
-// 5. NAVEGAÇÃO POR ABAS
+// 6. NAVEGAÇÃO POR ABAS
 // ==============================================================
 
 function mudarAba(abaId) {
@@ -332,7 +403,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
 
 // ==============================================================
-// 6. INICIALIZAÇÃO
+// 7. INICIALIZAÇÃO
 // ==============================================================
 
 document.addEventListener('DOMContentLoaded', function() {

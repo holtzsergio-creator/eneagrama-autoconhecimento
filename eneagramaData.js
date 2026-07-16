@@ -12,7 +12,10 @@ const TIPOS = [
         desejo: "Ser bom, íntegro",
         descricao: "O Reformador é consciente, ético e tem um forte senso de certo e errado. Busca melhorar o mundo e a si mesmo, mas pode cair no perfeccionismo e na rigidez. No caminho espiritual, aprende a aceitar a imperfeição e a descansar na graça.",
         pergunta: "Sou muito atento a detalhes e organizado, e me incomodo com erros ou desordem.",
-        cor: "#8B5A2B"
+        cor: "#8B5A2B",
+        // SETAS DE MOVIMENTO (Lei do 7)
+        setaEstresse: 4,
+        setaCrescimento: 7
     },
     {
         id: 2,
@@ -23,7 +26,9 @@ const TIPOS = [
         desejo: "Ser amado e necessário",
         descricao: "O Ajudador é generoso, acolhedor e se doa aos outros. Pode, porém, sacrificar suas próprias necessidades e manipular para ser indispensável. A virtude da humildade o ensina a receber e a reconhecer seus próprios limites.",
         pergunta: "Gosto de ajudar os outros e sou muito generoso, muitas vezes colocando os outros em primeiro lugar.",
-        cor: "#C47B4A"
+        cor: "#C47B4A",
+        setaEstresse: 8,
+        setaCrescimento: 4
     },
     {
         id: 3,
@@ -34,7 +39,9 @@ const TIPOS = [
         desejo: "Ser bem-sucedido e admirado",
         descricao: "O Realizador é ambicioso, focado e adaptável. Busca excelência e reconhecimento, mas pode perder a conexão com seus sentimentos reais. A prática da verdade o ajuda a ser autêntico e a encontrar valor além do desempenho.",
         pergunta: "Sou muito focado em metas e gosto de ser reconhecido pelo meu sucesso.",
-        cor: "#D4A24C"
+        cor: "#D4A24C",
+        setaEstresse: 9,
+        setaCrescimento: 6
     },
     {
         id: 4,
@@ -45,7 +52,9 @@ const TIPOS = [
         desejo: "Ser único e especial",
         descricao: "O Romântico é sensível, criativo e introspectivo. Busca significado e autenticidade, mas pode se sentir deficiente e comparar-se. A equanimidade traz paz interior e aceitação da própria essência.",
         pergunta: "Sinto que sou diferente dos outros e busco profundamente minha identidade única.",
-        cor: "#7A5C7A"
+        cor: "#7A5C7A",
+        setaEstresse: 2,
+        setaCrescimento: 1
     },
     {
         id: 5,
@@ -56,7 +65,9 @@ const TIPOS = [
         desejo: "Ser competente e entender o mundo",
         descricao: "O Observador é analítico, independente e reservado. Acumula conhecimento para sentir segurança, mas pode se isolar. A virtude do desapego o convida a confiar na vida e a compartilhar seu saber.",
         pergunta: "Prefiro observar e analisar as situações antes de agir, e valorizo meu espaço pessoal.",
-        cor: "#4A6B8A"
+        cor: "#4A6B8A",
+        setaEstresse: 7,
+        setaCrescimento: 8
     },
     {
         id: 6,
@@ -67,7 +78,9 @@ const TIPOS = [
         desejo: "Ter segurança e orientação",
         descricao: "O Questionador é leal, vigilante e responsável. Antecipa problemas e busca proteção, mas a ansiedade pode dominá-lo. A coragem o ajuda a confiar em si mesmo e na vida, mesmo na incerteza.",
         pergunta: "Costumo pensar nos piores cenários e busco segurança em pessoas ou instituições.",
-        cor: "#8F8A6B"
+        cor: "#8F8A6B",
+        setaEstresse: 3,
+        setaCrescimento: 9
     },
     {
         id: 7,
@@ -78,7 +91,9 @@ const TIPOS = [
         desejo: "Ser feliz e livre",
         descricao: "O Entusiasta é otimista, espontâneo e busca novas experiências. Evita o sofrimento e pode dispersar-se. A sobriedade o ensina a encontrar contentamento no simples e a enfrentar a dor com maturidade.",
         pergunta: "Sou otimista, adoro novidades e evito situações que me pareçam chatas ou dolorosas.",
-        cor: "#C49A6C"
+        cor: "#C49A6C",
+        setaEstresse: 1,
+        setaCrescimento: 5
     },
     {
         id: 8,
@@ -89,7 +104,9 @@ const TIPOS = [
         desejo: "Proteger-se e ter controle",
         descricao: "O Desafiador é forte, protetor e direto. Luta por justiça e não gosta de fraquezas, mas pode dominar os outros. A inocência o reconecta à leveza e à confiança no fluxo da vida.",
         pergunta: "Sou decidido, defendo os outros e não gosto de ser controlado ou de mostrar vulnerabilidade.",
-        cor: "#A65A4A"
+        cor: "#A65A4A",
+        setaEstresse: 5,
+        setaCrescimento: 2
     },
     {
         id: 9,
@@ -100,6 +117,8 @@ const TIPOS = [
         desejo: "Ter paz e união",
         descricao: "O Pacificador é calmo, receptivo e mediador. Evita conflitos e pode se esquecer de si mesmo. A virtude da ação o motiva a ocupar seu lugar e a expressar sua vontade com amor.",
         pergunta: "Evito conflitos e busco harmonia, muitas vezes concordando com os outros para manter a paz.",
-        cor: "#7A8B7A"
+        cor: "#7A8B7A",
+        setaEstresse: 6,
+        setaCrescimento: 3
     }
 ];

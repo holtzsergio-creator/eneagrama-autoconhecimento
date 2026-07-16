@@ -176,6 +176,72 @@ h1 {
 }
 
 
+/* --- SETAS DE MOVIMENTO --- */
+.setas-container {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #fffcf8;
+    border-radius: 16px;
+    border: 1px solid #e3d9cf;
+}
+
+.setas-container h4 {
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: #5a4c3e;
+}
+
+.setas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.seta-estresse {
+    background: #fef0ed;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border-left: 4px solid #c0392b;
+}
+
+.seta-crescimento {
+    background: #edf7f0;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border-left: 4px solid #27ae60;
+}
+
+.seta-label {
+    font-size: 0.75rem;
+    color: #8f7a66;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.seta-nome {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin: 0.1rem 0;
+}
+
+.seta-detalhe {
+    font-size: 0.9rem;
+    color: #6f5f4e;
+}
+
+.seta-explicacao {
+    margin-top: 0.8rem;
+    padding: 0.8rem 1rem;
+    background: #f8f3ed;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #5a4c3e;
+}
+
+.seta-explicacao strong {
+    color: #3e3a36;
+}
+
 /* --- Botões --- */
 .btn {
     background: #b8a99a;
@@ -305,22 +371,26 @@ h1 {
     .container {
         padding: 1.2rem;
     }
-    
+
     .likert {
         grid-template-columns: 1fr;
     }
-    
+
     .likert label {
         font-size: 0.85rem;
         padding: 0.3rem 0.6rem;
     }
-    
+
     .detalhe {
         gap: 0.5rem;
     }
-    
+
     .opcao-triagem {
         padding: 0.8rem 1rem;
         font-size: 0.95rem;
+    }
+
+    .setas-grid {
+        grid-template-columns: 1fr;
     }
 }
