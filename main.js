@@ -154,7 +154,7 @@ function processarTriagem(e) {
 
 
 // ==============================================================
-// 3. EXIBIR RESULTADO (COM SETAS DE MOVIMENTO)
+// 3. EXIBIR RESULTADO (COM SETAS DE MOVIMENTO E NÚMEROS)
 // ==============================================================
 
 function exibirResultado(empatados, pontuacao, metodo) {
@@ -225,7 +225,7 @@ function exibirResultado(empatados, pontuacao, metodo) {
 
 
 // ==============================================================
-// 4. EXIBIR "MEU TIPO" (SALVO)
+// 4. EXIBIR "MEU TIPO" (SALVO) - CORRIGIDO COM NÚMEROS
 // ==============================================================
 
 function carregarMeuTipo() {
@@ -258,23 +258,23 @@ function carregarMeuTipo() {
 
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-                <h2>${tipo.nome}</h2>
+                <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span> ${tipo.nome}</h2>
                 <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
                 <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
                 <p>${tipo.descricao}</p>
 
-                <!-- SETAS DE MOVIMENTO -->
+                <!-- SETAS DE MOVIMENTO COM NÚMEROS -->
                 <div class="setas-container">
                     <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
                     <div class="setas-grid">
                         <div class="seta-estresse">
                             <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
-                            <div class="seta-nome">${tipoEstresse.nome}</div>
+                            <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
                             <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
                         </div>
                         <div class="seta-crescimento">
                             <div class="seta-label">⬆️ Em Crescimento (integração)</div>
-                            <div class="seta-nome">${tipoCrescimento.nome}</div>
+                            <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
                             <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
                         </div>
                     </div>
@@ -295,6 +295,7 @@ function carregarMeuTipo() {
             </div>
         `;
     } else {
+        // Múltiplos tipos empatados
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: #b8a99a;">
                 <h2>Tipos em destaque</h2>
@@ -302,7 +303,7 @@ function carregarMeuTipo() {
                 <p>Você apresentou equilíbrio entre estes tipos:</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.8rem 0;">
                     ${tiposEncontrados.map(t => `
-                        <span class="badge-tipo" style="background: ${t.cor}; color: #fff;">${t.nome}</span>
+                        <span class="badge-tipo" style="background: ${t.cor}; color: #fff;">${t.id}. ${t.nome}</span>
                     `).join('')}
                 </div>
                 <p>Explore o catálogo para conhecer todos eles.</p>
@@ -346,7 +347,7 @@ function exibirDetalheCatalogo(id) {
             <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
             <p>${tipo.descricao}</p>
 
-            <!-- SETAS DE MOVIMENTO -->
+            <!-- SETAS DE MOVIMENTO COM NÚMEROS -->
             <div class="setas-container">
                 <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
                 <div class="setas-grid">
