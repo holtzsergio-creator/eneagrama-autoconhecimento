@@ -10,141 +10,128 @@
     <div class="container">
         <h1>🌿 Eneagrama · Caminho Interior</h1>
 
-<!-- ============================================================ -->
-<!-- SÍMBOLO DO ENEAGRAMA (COM TOOLTIPS CORRIGIDOS)               -->
-<!-- ============================================================ -->
-<div style="text-align: center; margin: 1.5rem 0;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 300 300" width="220" height="220">
-        <!-- Estilos -->
-        <style>
-            .circulo { fill: none; stroke: #5a4c3e; stroke-width: 2; }
-            .triangulo { fill: none; stroke: #8B5A2B; stroke-width: 2; }
-            .hexagono { fill: none; stroke: #4A6B8A; stroke-width: 1.5; }
-            .seta { fill: none; stroke: #4A6B8A; stroke-width: 1.5; marker-end: url(#seta); }
-            .numero { font-family: 'Georgia', serif; font-size: 16px; fill: #3e3a36; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
-            .ponto { fill: #b8a99a; stroke: #5a4c3e; stroke-width: 1; }
-            .tooltip-group { cursor: pointer; }
-            .tooltip-group:hover .ponto { fill: #8f7a66; }
-            .tooltip-group:hover .numero { fill: #5a4c3e; }
-        </style>
+        <!-- ============================================================ -->
+        <!-- SÍMBOLO DO ENEAGRAMA (COM TOOLTIPS)                          -->
+        <!-- ============================================================ -->
+        <div style="text-align: center; margin: 1.5rem 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 300 300" width="220" height="220">
+                <!-- Estilos -->
+                <style>
+                    .circulo { fill: none; stroke: #5a4c3e; stroke-width: 2; }
+                    .triangulo { fill: none; stroke: #8B5A2B; stroke-width: 2; }
+                    .hexagono { fill: none; stroke: #4A6B8A; stroke-width: 1.5; }
+                    .seta { fill: none; stroke: #4A6B8A; stroke-width: 1.5; marker-end: url(#seta); }
+                    .numero { font-family: 'Georgia', serif; font-size: 16px; fill: #3e3a36; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+                    .ponto { fill: #b8a99a; stroke: #5a4c3e; stroke-width: 1; }
+                    .tooltip-group { cursor: pointer; }
+                    .tooltip-group:hover .ponto { fill: #8f7a66; }
+                    .tooltip-group:hover .numero { fill: #5a4c3e; }
+                </style>
 
-        <!-- Definição da seta -->
-        <defs>
-            <marker id="seta" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-                <polygon points="0 0, 6 3, 0 6" fill="#4A6B8A" />
-            </marker>
-        </defs>
+                <!-- Definição da seta -->
+                <defs>
+                    <marker id="seta" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0 0, 6 3, 0 6" fill="#4A6B8A" />
+                    </marker>
+                </defs>
 
-        <!-- Círculo externo (raio 120) -->
-        <circle cx="0" cy="0" r="120" class="circulo"/>
+                <!-- Círculo externo -->
+                <circle cx="0" cy="0" r="120" class="circulo"/>
 
-        <!-- Triângulo EQUILÁTERO (9-6-3) -->
-        <polygon points="0,-120  -103.92,60  103.92,60" class="triangulo"/>
+                <!-- Triângulo EQUILÁTERO (9-6-3) -->
+                <polygon points="0,-120  -103.92,60  103.92,60" class="triangulo"/>
 
-        <!-- Hexágono irregular (1-4-2-8-5-7) -->
-        <polygon points="77.13,-91.93  41.04,112.76  118.18,-20.84  -77.13,-91.93  -41.04,112.76  -118.18,-20.84" class="hexagono"/>
+                <!-- Hexágono irregular (1-4-2-8-5-7) -->
+                <polygon points="77.13,-91.93  41.04,112.76  118.18,-20.84  -77.13,-91.93  -41.04,112.76  -118.18,-20.84" class="hexagono"/>
 
-        <!-- Setas do hexágono (1→4→2→8→5→7→1) -->
-        <line x1="77.13" y1="-91.93" x2="41.04" y2="112.76" class="seta"/>
-        <line x1="41.04" y1="112.76" x2="118.18" y2="-20.84" class="seta"/>
-        <line x1="118.18" y1="-20.84" x2="-77.13" y2="-91.93" class="seta"/>
-        <line x1="-77.13" y1="-91.93" x2="-41.04" y2="112.76" class="seta"/>
-        <line x1="-41.04" y1="112.76" x2="-118.18" y2="-20.84" class="seta"/>
-        <line x1="-118.18" y1="-20.84" x2="77.13" y2="-91.93" class="seta"/>
+                <!-- Setas do hexágono (1→4→2→8→5→7→1) -->
+                <line x1="77.13" y1="-91.93" x2="41.04" y2="112.76" class="seta"/>
+                <line x1="41.04" y1="112.76" x2="118.18" y2="-20.84" class="seta"/>
+                <line x1="118.18" y1="-20.84" x2="-77.13" y2="-91.93" class="seta"/>
+                <line x1="-77.13" y1="-91.93" x2="-41.04" y2="112.76" class="seta"/>
+                <line x1="-41.04" y1="112.76" x2="-118.18" y2="-20.84" class="seta"/>
+                <line x1="-118.18" y1="-20.84" x2="77.13" y2="-91.93" class="seta"/>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 1: 40° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 1: O Reformador · Virtude: Serenidade · Vício: Ira</title>
-            <circle cx="77.13" cy="-91.93" r="4" class="ponto"/>
-            <text x="77.13" y="-104" class="numero">1</text>
-        </g>
+                <!-- Tipo 1 -->
+                <g class="tooltip-group">
+                    <title>Tipo 1: O Reformador · Virtude: Serenidade · Vício: Ira</title>
+                    <circle cx="77.13" cy="-91.93" r="4" class="ponto"/>
+                    <text x="77.13" y="-104" class="numero">1</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 2: 80° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 2: O Ajudador · Virtude: Humildade · Vício: Orgulho</title>
-            <circle cx="118.18" cy="-20.84" r="4" class="ponto"/>
-            <text x="118.18" y="-33" class="numero">2</text>
-        </g>
+                <!-- Tipo 2 -->
+                <g class="tooltip-group">
+                    <title>Tipo 2: O Ajudador · Virtude: Humildade · Vício: Orgulho</title>
+                    <circle cx="118.18" cy="-20.84" r="4" class="ponto"/>
+                    <text x="118.18" y="-33" class="numero">2</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 3: 120° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 3: O Realizador · Virtude: Verdade · Vício: Engano</title>
-            <circle cx="103.92" cy="60" r="4" class="ponto"/>
-            <text x="103.92" y="72" class="numero">3</text>
-        </g>
+                <!-- Tipo 3 -->
+                <g class="tooltip-group">
+                    <title>Tipo 3: O Realizador · Virtude: Verdade · Vício: Engano</title>
+                    <circle cx="103.92" cy="60" r="4" class="ponto"/>
+                    <text x="103.92" y="72" class="numero">3</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 4: 160° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 4: O Romântico · Virtude: Equanimidade · Vício: Inveja</title>
-            <circle cx="41.04" cy="112.76" r="4" class="ponto"/>
-            <text x="41.04" y="127" class="numero">4</text>
-        </g>
+                <!-- Tipo 4 -->
+                <g class="tooltip-group">
+                    <title>Tipo 4: O Romântico · Virtude: Equanimidade · Vício: Inveja</title>
+                    <circle cx="41.04" cy="112.76" r="4" class="ponto"/>
+                    <text x="41.04" y="127" class="numero">4</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 5: 200° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 5: O Observador · Virtude: Desapego · Vício: Avareza</title>
-            <circle cx="-41.04" cy="112.76" r="4" class="ponto"/>
-            <text x="-41.04" y="127" class="numero">5</text>
-        </g>
+                <!-- Tipo 5 -->
+                <g class="tooltip-group">
+                    <title>Tipo 5: O Observador · Virtude: Desapego · Vício: Avareza</title>
+                    <circle cx="-41.04" cy="112.76" r="4" class="ponto"/>
+                    <text x="-41.04" y="127" class="numero">5</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 6: 240° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 6: O Questionador · Virtude: Coragem · Vício: Medo</title>
-            <circle cx="-103.92" cy="60" r="4" class="ponto"/>
-            <text x="-103.92" y="72" class="numero">6</text>
-        </g>
+                <!-- Tipo 6 -->
+                <g class="tooltip-group">
+                    <title>Tipo 6: O Questionador · Virtude: Coragem · Vício: Medo</title>
+                    <circle cx="-103.92" cy="60" r="4" class="ponto"/>
+                    <text x="-103.92" y="72" class="numero">6</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 7: 280° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 7: O Entusiasta · Virtude: Sobriedade · Vício: Gula</title>
-            <circle cx="-118.18" cy="-20.84" r="4" class="ponto"/>
-            <text x="-118.18" y="-33" class="numero">7</text>
-        </g>
+                <!-- Tipo 7 -->
+                <g class="tooltip-group">
+                    <title>Tipo 7: O Entusiasta · Virtude: Sobriedade · Vício: Gula</title>
+                    <circle cx="-118.18" cy="-20.84" r="4" class="ponto"/>
+                    <text x="-118.18" y="-33" class="numero">7</text>
+                </g>
 
-        <!-- ============================================================ -->
-        <!-- TIPO 8: 320° -->
-        <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 8: O Desafiador · Virtude: Inocência · Vício: Luxúria (excesso)</title>
-            <circle cx="-77.13" cy="-91.93" r="4" class="ponto"/>
-            <text x="-77.13" y="-104" class="numero">8</text>
-        </g>
+                <!-- Tipo 8 -->
+                <g class="tooltip-group">
+                    <title>Tipo 8: O Desafiador · Virtude: Inocência · Vício: Luxúria (excesso)</title>
+                    <circle cx="-77.13" cy="-91.93" r="4" class="ponto"/>
+                    <text x="-77.13" y="-104" class="numero">8</text>
+                </g>
+
+                <!-- Tipo 9 -->
+                <g class="tooltip-group">
+                    <title>Tipo 9: O Pacificador · Virtude: Ação · Vício: Preguiça (acomodação)</title>
+                    <circle cx="0" cy="-120" r="4" class="ponto"/>
+                    <text x="0" y="-132" class="numero">9</text>
+                </g>
+
+            </svg>
+        </div>
 
         <!-- ============================================================ -->
-        <!-- TIPO 9: 0° (topo) -->
+        <!-- ABAS                                                         -->
         <!-- ============================================================ -->
-        <g class="tooltip-group">
-            <title>Tipo 9: O Pacificador · Virtude: Ação · Vício: Preguiça (acomodação)</title>
-            <circle cx="0" cy="-120" r="4" class="ponto"/>
-            <text x="0" y="-132" class="numero">9</text>
-        </g>
-
-    </svg>
-</div>
-
-        <!-- ABAS -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="teste">📋 Teste</button>
             <button class="tab-btn" data-tab="triagem">⚡ Triagem Rápida</button>
             <button class="tab-btn" data-tab="resultado">🧭 Meu Tipo</button>
             <button class="tab-btn" data-tab="catalogo">📚 Catálogo</button>
+            <button class="tab-btn" data-tab="contato">✉️ Contato</button>
         </div>
 
-        <!-- ABA: TESTE -->
+        <!-- ============================================================ -->
+        <!-- ABA: TESTE                                                    -->
+        <!-- ============================================================ -->
         <div id="tab-teste" class="tab-content active">
             <p style="margin-bottom: 1.5rem; color: #6f5f4e;">
                 Responda cada frase com o quanto você se identifica.
@@ -156,7 +143,9 @@
             <div id="resultado-teste" style="margin-top: 1.5rem;"></div>
         </div>
 
-        <!-- ABA: TRIAGEM RÁPIDA -->
+        <!-- ============================================================ -->
+        <!-- ABA: TRIAGEM RÁPIDA                                           -->
+        <!-- ============================================================ -->
         <div id="tab-triagem" class="tab-content">
             <p style="margin-bottom: 1.5rem; color: #6f5f4e;">
                 Escolha um parágrafo em cada grupo que melhor descreve sua essência.
@@ -175,7 +164,9 @@
             <div id="resultado-triagem" style="margin-top: 1.5rem;"></div>
         </div>
 
-        <!-- ABA: MEU TIPO -->
+        <!-- ============================================================ -->
+        <!-- ABA: MEU TIPO                                                 -->
+        <!-- ============================================================ -->
         <div id="tab-resultado" class="tab-content">
             <div id="meu-tipo-container">
                 <p style="color: #6f5f4e;">Faça o teste ou a triagem para descobrir seu tipo principal.</p>
@@ -183,13 +174,50 @@
             <button id="btn-ver-todos" class="btn btn-secondary" style="margin-top: 1rem;">Ver todos os tipos</button>
         </div>
 
-        <!-- ABA: CATÁLOGO -->
+        <!-- ============================================================ -->
+        <!-- ABA: CATÁLOGO                                                 -->
+        <!-- ============================================================ -->
         <div id="tab-catalogo" class="tab-content">
             <div id="catalogo-container" class="lista-tipos"></div>
             <div id="detalhe-catalogo" style="margin-top: 1.5rem;"></div>
         </div>
 
+        <!-- ============================================================ -->
+        <!-- ABA: CONTATO                                                  -->
+        <!-- ============================================================ -->
+        <div id="tab-contato" class="tab-content">
+            <h3 style="font-weight: 400; margin-bottom: 1rem;">✉️ Entre em contato</h3>
+            <p style="color: #6f5f4e; margin-bottom: 1.5rem;">
+                Dúvidas, sugestões ou feedback sobre o Eneagrama? Ficarei feliz em ouvir você!
+            </p>
+            <form id="form-contato" style="display: grid; gap: 1rem;">
+                <div>
+                    <label for="nome" style="display: block; margin-bottom: 0.3rem; font-size: 0.95rem;">Nome *</label>
+                    <input type="text" id="nome" name="nome" required style="width: 100%; padding: 0.6rem; border: 1px solid #d6cbbc; border-radius: 12px; font-family: inherit; background: #f8f3ed;">
+                </div>
+                <div>
+                    <label for="email" style="display: block; margin-bottom: 0.3rem; font-size: 0.95rem;">Email *</label>
+                    <input type="email" id="email" name="email" required style="width: 100%; padding: 0.6rem; border: 1px solid #d6cbbc; border-radius: 12px; font-family: inherit; background: #f8f3ed;">
+                </div>
+                <div>
+                    <label for="mensagem" style="display: block; margin-bottom: 0.3rem; font-size: 0.95rem;">Mensagem *</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" required style="width: 100%; padding: 0.6rem; border: 1px solid #d6cbbc; border-radius: 12px; font-family: inherit; background: #f8f3ed; resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: fit-content;">Enviar mensagem</button>
+            </form>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #8f7a66;">
+                ✉️ Ou escreva diretamente para: <a href="mailto:sergioholtz@duck.com" style="color: #6f5f4e;">sergioholtz@duck.com</a>
+            </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- RODAPÉ                                                        -->
+        <!-- ============================================================ -->
         <div class="footer-nota">
+            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+                <span>✉️ <a href="mailto:sergioholtz@duck.com" style="color: #6f5f4e; text-decoration: none;">sergioholtz@duck.com</a></span>
+                <span>🌿 <a href="https://github.com/holtzsergio-creator/eneagrama-autoconhecimento" target="_blank" style="color: #6f5f4e; text-decoration: none;">GitHub</a></span>
+            </div>
             Baseado na tradição dos Padres do Deserto · Virtudes e vícios capitais
         </div>
     </div>
