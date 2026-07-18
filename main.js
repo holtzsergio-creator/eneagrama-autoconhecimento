@@ -3,17 +3,48 @@
 // ==============================================================
 
 // ==============================================================
-// 1. TESTE LIKERT (escala de 4 pontos)
+// UTILITÁRIOS
 // ==============================================================
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function gerarPerguntasRandomicas() {
+    const todasPerguntas = [];
+    TIPOS.forEach(tipo => {
+        tipo.perguntas.forEach(pergunta => {
+            todasPerguntas.push({
+                tipoId: tipo.id,
+                pergunta: pergunta
+            });
+        });
+    });
+    return shuffleArray(todasPerguntas);
+}
+
+// ==============================================================
+// 1. TESTE LIKERT (com randomização)
+// ==============================================================
+
+let perguntasRandomicas = [];
 
 function renderPerguntas() {
     const container = document.getElementById('perguntas-container');
     container.innerHTML = '';
-    TIPOS.forEach((tipo, index) => {
+    
+    // Gerar perguntas randomicas
+    perguntasRandomicas = gerarPerguntasRandomicas();
+    
+    perguntasRandomicas.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'pergunta';
         div.innerHTML = `
-            <p><strong>${index + 1}.</strong> ${tipo.pergunta}</p>
+            <p><strong>${index + 1}.</strong> ${item.pergunta}</p>
             <div class="likert">
                 <label>
                     <input type="radio" name="q${index}" value="1" required>
@@ -43,12 +74,13 @@ function processarTeste(e) {
     const dados = new FormData(form);
 
     const pontuacao = TIPOS.map(() => 0);
-    for (let i = 0; i < TIPOS.length; i++) {
-        const val = dados.get(`q${i}`);
+    
+    perguntasRandomicas.forEach((item, index) => {
+        const val = dados.get(`q${index}`);
         if (val) {
-            pontuacao[i] = parseInt(val, 10);
+            pontuacao[item.tipoId - 1] += parseInt(val, 10);
         }
-    }
+    });
 
     const resultados = TIPOS.map((tipo, idx) => ({
         tipo: tipo,
@@ -79,7 +111,6 @@ function renderTriagem() {
     const grupoI = document.getElementById('grupo-I');
     const grupoII = document.getElementById('grupo-II');
 
-    // Grupo I
     grupoI.innerHTML = '';
     for (const [letra, dados] of Object.entries(TRIAGEM.grupos.I)) {
         const div = document.createElement('div');
@@ -100,7 +131,6 @@ function renderTriagem() {
         grupoI.appendChild(div);
     }
 
-    // Grupo II
     grupoII.innerHTML = '';
     for (const [letra, dados] of Object.entries(TRIAGEM.grupos.II)) {
         const div = document.createElement('div');
@@ -154,7 +184,7 @@ function processarTriagem(e) {
 
 
 // ==============================================================
-// 3. EXIBIR RESULTADO (COM SETAS DE MOVIMENTO E NÚMEROS)
+// 3. EXIBIR RESULTADO (com setas e compartilhamento)
 // ==============================================================
 
 function exibirResultado(empatados, pontuacao, metodo) {
@@ -165,11 +195,12 @@ function exibirResultado(empatados, pontuacao, metodo) {
         const tipo = empatados[0].tipo;
         const tipoEstresse = TIPOS.find(t => t.id === tipo.setaEstresse);
         const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
+        const totalPerguntas = metodo === 'teste-likert' ? perguntasRandomicas.length * 4 : 0;
 
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: ${tipo.cor};">
                 <h2>Seu tipo principal é: <span style="font-weight: bold;">${tipo.id}.</span> ${tipo.nome}</h2>
-                <div class="subtitulo">${metodo === 'teste-likert' ? `Pontuação: ${pontuacao} / 4` : 'Método Riso-Hudson'} · ${nomeMetodo}</div>
+                <div class="subtitulo">${metodo === 'teste-likert' ? `Pontuação: ${pontuacao} / ${totalPerguntas}` : 'Método Riso-Hudson'} · ${nomeMetodo}</div>
                 <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
 
                 <!-- SETAS DE MOVIMENTO -->
@@ -202,10 +233,12 @@ function exibirResultado(empatados, pontuacao, metodo) {
                     <span class="detalhe-item">✨ Virtude: ${tipo.virtude}</span>
                     <span class="detalhe-item">🔥 Vício: ${tipo.vicio}</span>
                 </div>
+
+                <!-- BOTÕES DE COMPARTILHAMENTO -->
+                ${gerarBotoesCompartilhamento()}
             </div>
         `;
     } else {
-        // EMPATE
         const nomes = empatados.map(r => `${r.tipo.id}. ${r.tipo.nome}`).join(' e ');
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: #b8a99a;">
@@ -217,15 +250,76 @@ function exibirResultado(empatados, pontuacao, metodo) {
                     `).join('')}
                 </div>
                 <p style="margin-top: 0.8rem; font-size: 0.9rem; color: #6f5f4e;">Explore o catálogo para conhecer todos os tipos e suas setas de movimento.</p>
+                ${gerarBotoesCompartilhamento()}
             </div>
         `;
     }
     carregarMeuTipo();
 }
 
+function gerarBotoesCompartilhamento() {
+    return `
+        <div class="compartilhar-container" style="margin-top: 1.5rem; text-align: center; padding-top: 1rem; border-top: 1px solid #e3d9cf;">
+            <p style="font-size: 0.9rem; color: #6f5f4e; margin-bottom: 0.5rem;">Compartilhe seu resultado:</p>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+                <button onclick="compartilharWhatsApp()" class="btn-compartilhar" style="background: #25D366;">WhatsApp</button>
+                <button onclick="compartilharTwitter()" class="btn-compartilhar" style="background: #1DA1F2;">Twitter</button>
+                <button onclick="compartilharFacebook()" class="btn-compartilhar" style="background: #1877F2;">Facebook</button>
+                <button onclick="compartilharLinkedIn()" class="btn-compartilhar" style="background: #0A66C2;">LinkedIn</button>
+                <button onclick="copiarLink()" class="btn-compartilhar" style="background: #6f5f4e;">Copiar Link</button>
+            </div>
+        </div>
+    `;
+}
+
 
 // ==============================================================
-// 4. EXIBIR "MEU TIPO" (SALVO) - CORRIGIDO COM NÚMEROS
+// 4. COMPARTILHAMENTO
+// ==============================================================
+
+function gerarTextoCompartilhamento() {
+    const stored = localStorage.getItem('eneagrama_resultado');
+    if (!stored) return 'Descubra seu tipo no Eneagrama! 🌿';
+    
+    const data = JSON.parse(stored);
+    const ids = data.ids;
+    const tipos = TIPOS.filter(t => ids.includes(t.id));
+    const nomes = tipos.map(t => `${t.id}. ${t.nome}`).join(' e ');
+    
+    return `Meu tipo no Eneagrama é ${nomes}! 🌿 Faça o teste também: ${window.location.href}`;
+}
+
+function compartilharWhatsApp() {
+    const texto = gerarTextoCompartilhamento();
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+}
+
+function compartilharTwitter() {
+    const texto = gerarTextoCompartilhamento();
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+}
+
+function compartilharFacebook() {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+    window.open(url, '_blank');
+}
+
+function compartilharLinkedIn() {
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+    window.open(url, '_blank');
+}
+
+function copiarLink() {
+    navigator.clipboard.writeText(window.location.href)
+        .then(() => alert('Link copiado para a área de transferência!'))
+        .catch(() => alert('Não foi possível copiar o link.'));
+}
+
+
+// ==============================================================
+// 5. EXIBIR "MEU TIPO" (SALVO)
 // ==============================================================
 
 function carregarMeuTipo() {
@@ -263,7 +357,6 @@ function carregarMeuTipo() {
                 <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
                 <p>${tipo.descricao}</p>
 
-                <!-- SETAS DE MOVIMENTO COM NÚMEROS -->
                 <div class="setas-container">
                     <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
                     <div class="setas-grid">
@@ -292,10 +385,10 @@ function carregarMeuTipo() {
                 <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
                     🌱 Sugestão de crescimento: ${tipo.virtude} – pratique a ${tipo.virtude.toLowerCase()} no seu dia a dia.
                 </p>
+                ${gerarBotoesCompartilhamento()}
             </div>
         `;
     } else {
-        // Múltiplos tipos empatados
         container.innerHTML = `
             <div class="card-tipo" style="border-left-color: #b8a99a;">
                 <h2>Tipos em destaque</h2>
@@ -307,6 +400,7 @@ function carregarMeuTipo() {
                     `).join('')}
                 </div>
                 <p>Explore o catálogo para conhecer todos eles.</p>
+                ${gerarBotoesCompartilhamento()}
             </div>
         `;
     }
@@ -314,7 +408,7 @@ function carregarMeuTipo() {
 
 
 // ==============================================================
-// 5. CATÁLOGO
+// 6. CATÁLOGO
 // ==============================================================
 
 function renderCatalogo() {
@@ -343,80 +437,4 @@ function exibirDetalheCatalogo(id) {
     const container = document.getElementById('detalhe-catalogo');
     container.innerHTML = `
         <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-            <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span> ${tipo.nome}</h2>
-            <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
-            <p>${tipo.descricao}</p>
-
-            <!-- SETAS DE MOVIMENTO COM NÚMEROS -->
-            <div class="setas-container">
-                <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
-                <div class="setas-grid">
-                    <div class="seta-estresse">
-                        <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
-                        <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
-                        <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
-                    </div>
-                    <div class="seta-crescimento">
-                        <div class="seta-label">⬆️ Em Crescimento (integração)</div>
-                        <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
-                        <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
-                    </div>
-                </div>
-                <div class="seta-explicacao">
-                    <strong>📖 Sobre as setas:</strong> Quando sob estresse, este tipo pode assumir traços negativos do tipo em <strong>estresse</strong>. 
-                    Em crescimento, pode acessar virtudes do tipo em <strong>crescimento</strong>.
-                    <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
-                </div>
-            </div>
-
-            <div class="detalhe">
-                <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
-                <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
-            </div>
-            <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
-                🌱 Caminho espiritual: cultivar a ${tipo.virtude.toLowerCase()} e transmutar o ${tipo.vicio.toLowerCase()}.
-            </p>
-        </div>
-    `;
-    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-
-// ==============================================================
-// 6. NAVEGAÇÃO POR ABAS
-// ==============================================================
-
-function mudarAba(abaId) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-
-    const tabContent = document.getElementById(`tab-${abaId}`);
-    if (tabContent) tabContent.classList.add('active');
-    const tabBtn = document.querySelector(`.tab-btn[data-tab="${abaId}"]`);
-    if (tabBtn) tabBtn.classList.add('active');
-}
-
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        mudarAba(this.dataset.tab);
-    });
-});
-
-
-// ==============================================================
-// 7. INICIALIZAÇÃO
-// ==============================================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    renderPerguntas();
-    renderTriagem();
-    carregarMeuTipo();
-    renderCatalogo();
-
-    document.getElementById('form-teste').addEventListener('submit', processarTeste);
-    document.getElementById('form-triagem').addEventListener('submit', processarTriagem);
-
-    document.getElementById('btn-ver-todos').addEventListener('click', function() {
-        mudarAba('catalogo');
-    });
-});
+            <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span
