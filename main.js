@@ -525,7 +525,7 @@ function exibirDetalheCatalogo(id) {
 
 
 // ==============================================================
-// 7. FORMULÁRIO DE CONTATO
+// FORMULÁRIO DE CONTATO (no rodapé)
 // ==============================================================
 
 function enviarContato(e) {
@@ -618,13 +618,6 @@ document.addEventListener('DOMContentLoaded', function() {
         formTriagem.addEventListener('submit', processarTriagem);
     } else {
         console.error('Formulário de triagem não encontrado!');
-    }
-
-    const formContato = document.getElementById('form-contato');
-    if (formContato) {
-        formContato.addEventListener('submit', enviarContato);
-    } else {
-        console.error('Formulário de contato não encontrado!');
     }
 
     const btnVerTodos = document.getElementById('btn-ver-todos');

@@ -242,6 +242,7 @@ h1 {
     color: #3e3a36;
 }
 
+
 /* --- Botões --- */
 .btn {
     background: #b8a99a;
@@ -352,7 +353,40 @@ h1 {
 }
 
 
-/* --- Rodapé --- */
+/* --- BOTÕES DE COMPARTILHAMENTO --- */
+.btn-compartilhar {
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-compartilhar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* --- SEÇÃO "SOBRE" EXPANSÍVEL --- */
+#sobre-eneagrama {
+    animation: fade 0.3s ease;
+}
+
+#sobre-eneagrama ol {
+    list-style-type: decimal;
+}
+
+#sobre-eneagrama li strong {
+    color: #3e3a36;
+}
+
+
+/* --- RODAPÉ --- */
 .footer-nota {
     margin-top: 2.5rem;
     padding-top: 1rem;
@@ -360,6 +394,27 @@ h1 {
     font-size: 0.9rem;
     color: #8f7a66;
     text-align: center;
+}
+
+.footer-nota a[onclick] {
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 1px dashed #b8a99a;
+}
+
+.footer-nota a[onclick]:hover {
+    color: #3e3a36;
+    border-bottom-color: #5a4c3e;
+}
+
+.footer-nota a {
+    color: #6f5f4e;
+    text-decoration: none;
+}
+
+.footer-nota a:hover {
+    text-decoration: underline;
+    color: #3e3a36;
 }
 
 
@@ -393,72 +448,7 @@ h1 {
     .setas-grid {
         grid-template-columns: 1fr;
     }
-}
 
-/* ==============================================================
-   BOTÕES DE COMPARTILHAMENTO
-   ============================================================== */
-
-.btn-compartilhar {
-    border: none;
-    color: #fff;
-    padding: 0.5rem 1.2rem;
-    border-radius: 30px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.btn-compartilhar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* ==============================================================
-   FORMULÁRIO DE CONTATO
-   ============================================================== */
-
-#form-contato input:focus,
-#form-contato textarea:focus {
-    outline: none;
-    border-color: #b8a99a;
-    box-shadow: 0 0 0 3px rgba(184, 169, 154, 0.2);
-}
-
-#form-contato input::placeholder,
-#form-contato textarea::placeholder {
-    color: #b8a99a;
-}
-
-/* ==============================================================
-   RODAPÉ COM SEÇÃO "SOBRE"
-   ============================================================== */
-
-.footer-nota a[onclick] {
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.footer-nota a[onclick]:hover {
-    color: #3e3a36;
-    border-bottom-color: #5a4c3e;
-}
-
-#sobre-eneagrama {
-    animation: fade 0.3s ease;
-}
-
-#sobre-eneagrama ol {
-    list-style-type: decimal;
-}
-
-#sobre-eneagrama li strong {
-    color: #3e3a36;
-}
-
-@media (max-width: 600px) {
     #sobre-eneagrama {
         padding: 1rem;
         font-size: 0.9rem;
