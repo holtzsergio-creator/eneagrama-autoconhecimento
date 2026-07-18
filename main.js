@@ -1,5 +1,5 @@
 // ==============================================================
-// LÓGICA PRINCIPAL
+// LÓGICA PRINCIPAL - REVISADA
 // ==============================================================
 
 // ==============================================================
@@ -17,28 +17,44 @@ function shuffleArray(array) {
 function gerarPerguntasRandomicas() {
     const todasPerguntas = [];
     TIPOS.forEach(tipo => {
-        tipo.perguntas.forEach(pergunta => {
-            todasPerguntas.push({
-                tipoId: tipo.id,
-                pergunta: pergunta
+        if (tipo.perguntas && tipo.perguntas.length > 0) {
+            tipo.perguntas.forEach(pergunta => {
+                todasPerguntas.push({
+                    tipoId: tipo.id,
+                    pergunta: pergunta
+                });
             });
-        });
+        }
     });
     return shuffleArray(todasPerguntas);
 }
+
+
+// ==============================================================
+// VARIÁVEIS GLOBAIS
+// ==============================================================
+
+let perguntasRandomicas = [];
+
 
 // ==============================================================
 // 1. TESTE LIKERT (com randomização)
 // ==============================================================
 
-let perguntasRandomicas = [];
-
 function renderPerguntas() {
     const container = document.getElementById('perguntas-container');
-    container.innerHTML = '';
+    if (!container) {
+        console.error('Elemento #perguntas-container não encontrado!');
+        return;
+    }
     
-    // Gerar perguntas randomicas
+    container.innerHTML = '';
     perguntasRandomicas = gerarPerguntasRandomicas();
+    
+    if (perguntasRandomicas.length === 0) {
+        container.innerHTML = '<p>Nenhuma pergunta encontrada. Verifique os dados.</p>';
+        return;
+    }
     
     perguntasRandomicas.forEach((item, index) => {
         const div = document.createElement('div');
@@ -71,8 +87,12 @@ function renderPerguntas() {
 function processarTeste(e) {
     e.preventDefault();
     const form = document.getElementById('form-teste');
+    if (!form) {
+        alert('Formulário não encontrado!');
+        return;
+    }
+    
     const dados = new FormData(form);
-
     const pontuacao = TIPOS.map(() => 0);
     
     perguntasRandomicas.forEach((item, index) => {
@@ -104,12 +124,17 @@ function processarTeste(e) {
 
 
 // ==============================================================
-// 2. TRIAGEM RÁPIDA (Riso-Hudson)
+// 2. TRIAGEM RÁPIDA
 // ==============================================================
 
 function renderTriagem() {
     const grupoI = document.getElementById('grupo-I');
     const grupoII = document.getElementById('grupo-II');
+    
+    if (!grupoI || !grupoII) {
+        console.error('Elementos da triagem não encontrados!');
+        return;
+    }
 
     grupoI.innerHTML = '';
     for (const [letra, dados] of Object.entries(TRIAGEM.grupos.I)) {
@@ -155,6 +180,11 @@ function renderTriagem() {
 function processarTriagem(e) {
     e.preventDefault();
     const form = document.getElementById('form-triagem');
+    if (!form) {
+        alert('Formulário não encontrado!');
+        return;
+    }
+    
     const dados = new FormData(form);
     const grupoI = dados.get('grupoI');
     const grupoII = dados.get('grupoII');
@@ -184,11 +214,16 @@ function processarTriagem(e) {
 
 
 // ==============================================================
-// 3. EXIBIR RESULTADO (com setas e compartilhamento)
+// 3. EXIBIR RESULTADO
 // ==============================================================
 
 function exibirResultado(empatados, pontuacao, metodo) {
     const container = document.getElementById('resultado-teste');
+    if (!container) {
+        console.error('Elemento #resultado-teste não encontrado!');
+        return;
+    }
+    
     const nomeMetodo = metodo === 'teste-likert' ? 'Teste Likert' : 'Triagem Rápida (Riso-Hudson)';
 
     if (empatados.length === 1) {
@@ -203,7 +238,6 @@ function exibirResultado(empatados, pontuacao, metodo) {
                 <div class="subtitulo">${metodo === 'teste-likert' ? `Pontuação: ${pontuacao} / ${totalPerguntas}` : 'Método Riso-Hudson'} · ${nomeMetodo}</div>
                 <p style="margin: 0.8rem 0;">${tipo.descricao}</p>
 
-                <!-- SETAS DE MOVIMENTO -->
                 <div class="setas-container">
                     <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
                     <div class="setas-grid">
@@ -234,7 +268,6 @@ function exibirResultado(empatados, pontuacao, metodo) {
                     <span class="detalhe-item">🔥 Vício: ${tipo.vicio}</span>
                 </div>
 
-                <!-- BOTÕES DE COMPARTILHAMENTO -->
                 ${gerarBotoesCompartilhamento()}
             </div>
         `;
@@ -281,34 +314,33 @@ function gerarTextoCompartilhamento() {
     const stored = localStorage.getItem('eneagrama_resultado');
     if (!stored) return 'Descubra seu tipo no Eneagrama! 🌿';
     
-    const data = JSON.parse(stored);
-    const ids = data.ids;
-    const tipos = TIPOS.filter(t => ids.includes(t.id));
-    const nomes = tipos.map(t => `${t.id}. ${t.nome}`).join(' e ');
-    
-    return `Meu tipo no Eneagrama é ${nomes}! 🌿 Faça o teste também: ${window.location.href}`;
+    try {
+        const data = JSON.parse(stored);
+        const ids = data.ids;
+        const tipos = TIPOS.filter(t => ids.includes(t.id));
+        const nomes = tipos.map(t => `${t.id}. ${t.nome}`).join(' e ');
+        return `Meu tipo no Eneagrama é ${nomes}! 🌿 Faça o teste também: ${window.location.href}`;
+    } catch (e) {
+        return 'Descubra seu tipo no Eneagrama! 🌿';
+    }
 }
 
 function compartilharWhatsApp() {
     const texto = gerarTextoCompartilhamento();
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
-    window.open(url, '_blank');
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`, '_blank');
 }
 
 function compartilharTwitter() {
     const texto = gerarTextoCompartilhamento();
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}`;
-    window.open(url, '_blank');
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}`, '_blank');
 }
 
 function compartilharFacebook() {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-    window.open(url, '_blank');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
 }
 
 function compartilharLinkedIn() {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
-    window.open(url, '_blank');
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
 }
 
 function copiarLink() {
@@ -319,11 +351,16 @@ function copiarLink() {
 
 
 // ==============================================================
-// 5. EXIBIR "MEU TIPO" (SALVO)
+// 5. EXIBIR "MEU TIPO"
 // ==============================================================
 
 function carregarMeuTipo() {
     const container = document.getElementById('meu-tipo-container');
+    if (!container) {
+        console.error('Elemento #meu-tipo-container não encontrado!');
+        return;
+    }
+    
     const stored = localStorage.getItem('eneagrama_resultado');
 
     if (!stored) {
@@ -331,78 +368,83 @@ function carregarMeuTipo() {
         return;
     }
 
-    const data = JSON.parse(stored);
-    const ids = data.ids;
-    const metodo = data.metodo || 'desconhecido';
-    const tiposEncontrados = TIPOS.filter(t => ids.includes(t.id));
+    try {
+        const data = JSON.parse(stored);
+        const ids = data.ids;
+        const metodo = data.metodo || 'desconhecido';
+        const tiposEncontrados = TIPOS.filter(t => ids.includes(t.id));
 
-    if (tiposEncontrados.length === 0) {
-        container.innerHTML = `<p style="color: #6f5f4e;">Nenhum tipo encontrado. Faça o teste novamente.</p>`;
-        return;
-    }
+        if (tiposEncontrados.length === 0) {
+            container.innerHTML = `<p style="color: #6f5f4e;">Nenhum tipo encontrado. Faça o teste novamente.</p>`;
+            return;
+        }
 
-    const nomeMetodo = metodo === 'teste-likert' ? 'Teste Likert' :
-        metodo === 'triagem-rapida' ? 'Triagem Rápida (Riso-Hudson)' :
-        'Método desconhecido';
+        const nomeMetodo = metodo === 'teste-likert' ? 'Teste Likert' :
+            metodo === 'triagem-rapida' ? 'Triagem Rápida (Riso-Hudson)' :
+            'Método desconhecido';
 
-    if (tiposEncontrados.length === 1) {
-        const tipo = tiposEncontrados[0];
-        const tipoEstresse = TIPOS.find(t => t.id === tipo.setaEstresse);
-        const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
+        if (tiposEncontrados.length === 1) {
+            const tipo = tiposEncontrados[0];
+            const tipoEstresse = TIPOS.find(t => t.id === tipo.setaEstresse);
+            const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
 
-        container.innerHTML = `
-            <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-                <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span> ${tipo.nome}</h2>
-                <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
-                <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
-                <p>${tipo.descricao}</p>
+            container.innerHTML = `
+                <div class="card-tipo" style="border-left-color: ${tipo.cor};">
+                    <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span> ${tipo.nome}</h2>
+                    <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
+                    <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
+                    <p>${tipo.descricao}</p>
 
-                <div class="setas-container">
-                    <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
-                    <div class="setas-grid">
-                        <div class="seta-estresse">
-                            <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
-                            <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
-                            <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
+                    <div class="setas-container">
+                        <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
+                        <div class="setas-grid">
+                            <div class="seta-estresse">
+                                <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
+                                <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
+                                <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
+                            </div>
+                            <div class="seta-crescimento">
+                                <div class="seta-label">⬆️ Em Crescimento (integração)</div>
+                                <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
+                                <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
+                            </div>
                         </div>
-                        <div class="seta-crescimento">
-                            <div class="seta-label">⬆️ Em Crescimento (integração)</div>
-                            <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
-                            <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
+                        <div class="seta-explicacao">
+                            <strong>📖 Sobre as setas:</strong> Quando sob estresse, você pode assumir traços negativos do tipo indicado em <strong>estresse</strong>. 
+                            Em crescimento, você pode acessar virtudes do tipo indicado em <strong>crescimento</strong>.
+                            <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
                         </div>
                     </div>
-                    <div class="seta-explicacao">
-                        <strong>📖 Sobre as setas:</strong> Quando sob estresse, você pode assumir traços negativos do tipo indicado em <strong>estresse</strong>. 
-                        Em crescimento, você pode acessar virtudes do tipo indicado em <strong>crescimento</strong>.
-                        <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
-                    </div>
-                </div>
 
-                <div class="detalhe">
-                    <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
-                    <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+                    <div class="detalhe">
+                        <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
+                        <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+                    </div>
+                    <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
+                        🌱 Sugestão de crescimento: ${tipo.virtude} – pratique a ${tipo.virtude.toLowerCase()} no seu dia a dia.
+                    </p>
+                    ${gerarBotoesCompartilhamento()}
                 </div>
-                <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
-                    🌱 Sugestão de crescimento: ${tipo.virtude} – pratique a ${tipo.virtude.toLowerCase()} no seu dia a dia.
-                </p>
-                ${gerarBotoesCompartilhamento()}
-            </div>
-        `;
-    } else {
-        container.innerHTML = `
-            <div class="card-tipo" style="border-left-color: #b8a99a;">
-                <h2>Tipos em destaque</h2>
-                <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
-                <p>Você apresentou equilíbrio entre estes tipos:</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.8rem 0;">
-                    ${tiposEncontrados.map(t => `
-                        <span class="badge-tipo" style="background: ${t.cor}; color: #fff;">${t.id}. ${t.nome}</span>
-                    `).join('')}
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="card-tipo" style="border-left-color: #b8a99a;">
+                    <h2>Tipos em destaque</h2>
+                    <p style="font-size: 0.9rem; color: #8f7a66; margin-bottom: 0.8rem;">Identificado por: ${nomeMetodo}</p>
+                    <p>Você apresentou equilíbrio entre estes tipos:</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.8rem 0;">
+                        ${tiposEncontrados.map(t => `
+                            <span class="badge-tipo" style="background: ${t.cor}; color: #fff;">${t.id}. ${t.nome}</span>
+                        `).join('')}
+                    </div>
+                    <p>Explore o catálogo para conhecer todos eles.</p>
+                    ${gerarBotoesCompartilhamento()}
                 </div>
-                <p>Explore o catálogo para conhecer todos eles.</p>
-                ${gerarBotoesCompartilhamento()}
-            </div>
-        `;
+            `;
+        }
+    } catch (e) {
+        console.error('Erro ao carregar resultado:', e);
+        container.innerHTML = `<p style="color: #6f5f4e;">Erro ao carregar resultado. Tente novamente.</p>`;
     }
 }
 
@@ -413,6 +455,11 @@ function carregarMeuTipo() {
 
 function renderCatalogo() {
     const container = document.getElementById('catalogo-container');
+    if (!container) {
+        console.error('Elemento #catalogo-container não encontrado!');
+        return;
+    }
+    
     container.innerHTML = '';
     TIPOS.forEach(tipo => {
         const div = document.createElement('div');
@@ -435,6 +482,139 @@ function exibirDetalheCatalogo(id) {
     const tipoCrescimento = TIPOS.find(t => t.id === tipo.setaCrescimento);
 
     const container = document.getElementById('detalhe-catalogo');
+    if (!container) return;
+    
     container.innerHTML = `
         <div class="card-tipo" style="border-left-color: ${tipo.cor};">
-            <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span
+            <h2><span style="font-weight: bold;">Tipo ${tipo.id}:</span> ${tipo.nome}</h2>
+            <div class="subtitulo">Virtude: ${tipo.virtude} · Vício: ${tipo.vicio}</div>
+            <p>${tipo.descricao}</p>
+
+            <div class="setas-container">
+                <h4>🧭 Caminhos de Movimento (Lei do 7)</h4>
+                <div class="setas-grid">
+                    <div class="seta-estresse">
+                        <div class="seta-label">⬇️ Em Estresse (desintegração)</div>
+                        <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoEstresse.id}</span> · ${tipoEstresse.nome}</div>
+                        <div class="seta-detalhe">Vício: ${tipoEstresse.vicio}</div>
+                    </div>
+                    <div class="seta-crescimento">
+                        <div class="seta-label">⬆️ Em Crescimento (integração)</div>
+                        <div class="seta-nome"><span style="font-weight: bold;">${tipo.id}</span> → <span style="font-weight: bold;">${tipoCrescimento.id}</span> · ${tipoCrescimento.nome}</div>
+                        <div class="seta-detalhe">Virtude: ${tipoCrescimento.virtude}</div>
+                    </div>
+                </div>
+                <div class="seta-explicacao">
+                    <strong>📖 Sobre as setas:</strong> Quando sob estresse, este tipo pode assumir traços negativos do tipo em <strong>estresse</strong>. 
+                    Em crescimento, pode acessar virtudes do tipo em <strong>crescimento</strong>.
+                    <br><small style="color: #8f7a66;">Sequência da Lei do 7: 1 → 4 → 2 → 8 → 5 → 7 → 1 (estresse) · 3 → 9 → 6 → 3 (tríade)</small>
+                </div>
+            </div>
+
+            <div class="detalhe">
+                <span class="detalhe-item">😨 Medo: ${tipo.medo}</span>
+                <span class="detalhe-item">💫 Desejo: ${tipo.desejo}</span>
+            </div>
+            <p style="margin-top: 1rem; font-style: italic; color: #6f5f4e;">
+                🌱 Caminho espiritual: cultivar a ${tipo.virtude.toLowerCase()} e transmutar o ${tipo.vicio.toLowerCase()}.
+            </p>
+        </div>
+    `;
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+
+// ==============================================================
+// 7. FORMULÁRIO DE CONTATO
+// ==============================================================
+
+function enviarContato(e) {
+    e.preventDefault();
+    const form = document.getElementById('form-contato');
+    if (!form) {
+        alert('Formulário não encontrado!');
+        return;
+    }
+    
+    const dados = new FormData(form);
+    const nome = dados.get('nome');
+    const email = dados.get('email');
+    const mensagem = dados.get('mensagem');
+
+    if (!nome || !email || !mensagem) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
+    const assunto = `Contato via Eneagrama - ${nome}`;
+    const corpo = `Nome: ${nome}\nEmail: ${email}\n\nMensagem:\n${mensagem}`;
+
+    window.location.href = `mailto:sergioholtz@duck.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+    alert('Obrigado pela mensagem! Seu cliente de email será aberto para enviar.');
+    form.reset();
+}
+
+
+// ==============================================================
+// 8. NAVEGAÇÃO POR ABAS
+// ==============================================================
+
+function mudarAba(abaId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+    const tabContent = document.getElementById(`tab-${abaId}`);
+    if (tabContent) tabContent.classList.add('active');
+    const tabBtn = document.querySelector(`.tab-btn[data-tab="${abaId}"]`);
+    if (tabBtn) tabBtn.classList.add('active');
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        mudarAba(this.dataset.tab);
+    });
+});
+
+
+// ==============================================================
+// 9. INICIALIZAÇÃO
+// ==============================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM carregado, inicializando...');
+    
+    renderPerguntas();
+    renderTriagem();
+    carregarMeuTipo();
+    renderCatalogo();
+
+    const formTeste = document.getElementById('form-teste');
+    if (formTeste) {
+        formTeste.addEventListener('submit', processarTeste);
+    } else {
+        console.error('Formulário de teste não encontrado!');
+    }
+
+    const formTriagem = document.getElementById('form-triagem');
+    if (formTriagem) {
+        formTriagem.addEventListener('submit', processarTriagem);
+    } else {
+        console.error('Formulário de triagem não encontrado!');
+    }
+
+    const formContato = document.getElementById('form-contato');
+    if (formContato) {
+        formContato.addEventListener('submit', enviarContato);
+    } else {
+        console.error('Formulário de contato não encontrado!');
+    }
+
+    const btnVerTodos = document.getElementById('btn-ver-todos');
+    if (btnVerTodos) {
+        btnVerTodos.addEventListener('click', function() {
+            mudarAba('catalogo');
+        });
+    }
+    
+    console.log('Inicialização concluída!');
+});
