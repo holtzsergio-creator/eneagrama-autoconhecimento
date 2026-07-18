@@ -210,17 +210,40 @@
             </p>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- RODAPÉ                                                        -->
-        <!-- ============================================================ -->
-        <div class="footer-nota">
-            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
-                <span>✉️ <a href="mailto:sergioholtz@duck.com" style="color: #6f5f4e; text-decoration: none;">sergioholtz@duck.com</a></span>
-                <span>🌿 <a href="https://github.com/holtzsergio-creator/eneagrama-autoconhecimento" target="_blank" style="color: #6f5f4e; text-decoration: none;">GitHub</a></span>
-            </div>
-            Baseado na tradição dos Padres do Deserto · Virtudes e vícios capitais
-        </div>
+<!-- ============================================================ -->
+<!-- RODAPÉ COM SEÇÃO "SOBRE" EXPANSÍVEL                          -->
+<!-- ============================================================ -->
+<div class="footer-nota">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+        <span>✉️ <a href="mailto:sergioholtz@duck.com" style="color: #6f5f4e; text-decoration: none;">sergioholtz@duck.com</a></span>
+        <span>🌿 <a href="https://github.com/holtzsergio-creator/eneagrama-autoconhecimento" target="_blank" style="color: #6f5f4e; text-decoration: none;">GitHub</a></span>
+        <span>📖 <a href="#" onclick="toggleSobre(); return false;" style="color: #6f5f4e; text-decoration: none; border-bottom: 1px dashed #b8a99a;">Sobre o Eneagrama</a></span>
     </div>
+
+    <!-- SEÇÃO EXPANSÍVEL "SOBRE" -->
+    <div id="sobre-eneagrama" style="display: none; text-align: left; max-width: 700px; margin: 1rem auto 0; padding: 1.2rem 1.5rem; background: #f8f3ed; border-radius: 12px; font-size: 0.95rem; color: #5a4c3e; line-height: 1.8;">
+        <h4 style="font-weight: 400; margin-bottom: 0.5rem; color: #3e3a36;">🌱 Sobre o Uso do Eneagrama</h4>
+        <p style="margin-bottom: 0.8rem;">
+            O Eneagrama é um <strong>mapa descritivo</strong> da personalidade, não uma sentença definitiva. Ele oferece uma linguagem para compreender nossos padrões de pensamento, sentimento e ação, especialmente aqueles que nos afastam (vícios) e nos aproximam (virtudes) de uma vida plena.
+        </p>
+        <p style="margin-bottom: 0.5rem;"><strong>Para uma experiência sadia e construtiva, convidamos você a considerar:</strong></p>
+        <ol style="padding-left: 1.2rem; margin-bottom: 0.8rem;">
+            <li style="margin-bottom: 0.3rem;"><strong>O Eneagrama descreve, não determina.</strong> Seu tipo é um ponto de partida para o autoconhecimento, não uma "caixa" que define quem você é. A graça e a liberdade pessoal são sempre maiores que qualquer tipologia.</li>
+            <li style="margin-bottom: 0.3rem;"><strong>Ferramenta de discernimento, não de diagnóstico.</strong> Este guia é um recurso para a reflexão pessoal, e não substitui o acompanhamento profissional ou espiritual, nem os sacramentos.</li>
+            <li style="margin-bottom: 0.3rem;"><strong>Caminho de crescimento, não de desculpas.</strong> Conhecer seu vício fundamental é um passo para transmutá-lo em virtude. As "setas de movimento" mostram para onde você pode tender, mas também apontam o caminho da integração e da felicidade.</li>
+        </ol>
+        <div style="background: #ede7e0; padding: 0.8rem 1rem; border-radius: 10px; text-align: center; font-style: italic;">
+            "Conhece a verdade, e a verdade te libertará." <span style="font-style: normal;">(João 8,32)</span>
+        </div>
+        <p style="margin-top: 0.8rem; font-size: 0.9rem; color: #6f5f4e;">
+            Use este site como um convite à escuta de si mesmo e à abertura para a ação da graça em sua vida.
+        </p>
+    </div>
+
+    <div style="margin-top: 0.8rem; font-size: 0.9rem; color: #8f7a66;">
+        Baseado na tradição dos Padres do Deserto · Virtudes e vícios capitais
+    </div>
+</div>
 
     <!-- Scripts -->
     <script src="eneagramaData.js"></script>

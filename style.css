@@ -433,10 +433,34 @@ h1 {
 }
 
 /* ==============================================================
-   RODAPÉ COM LINKS
+   RODAPÉ COM SEÇÃO "SOBRE"
    ============================================================== */
 
-.footer-nota a:hover {
-    text-decoration: underline;
-    color: #5a4c3e;
+.footer-nota a[onclick] {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.footer-nota a[onclick]:hover {
+    color: #3e3a36;
+    border-bottom-color: #5a4c3e;
+}
+
+#sobre-eneagrama {
+    animation: fade 0.3s ease;
+}
+
+#sobre-eneagrama ol {
+    list-style-type: decimal;
+}
+
+#sobre-eneagrama li strong {
+    color: #3e3a36;
+}
+
+@media (max-width: 600px) {
+    #sobre-eneagrama {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
 }

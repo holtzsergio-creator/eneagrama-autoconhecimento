@@ -575,6 +575,24 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
+// ==============================================================
+// FUNÇÃO PARA EXPANDIR/RECOLHER A SEÇÃO "SOBRE"
+// ==============================================================
+
+function toggleSobre() {
+    const div = document.getElementById('sobre-eneagrama');
+    if (!div) return;
+    
+    if (div.style.display === 'none' || div.style.display === '') {
+        div.style.display = 'block';
+        // Scroll suave para a seção
+        setTimeout(() => {
+            div.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        div.style.display = 'none';
+    }
+}
 
 // ==============================================================
 // 9. INICIALIZAÇÃO
